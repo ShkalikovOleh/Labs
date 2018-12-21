@@ -8,7 +8,7 @@ def hello_user():
 
 
 def celsium_to_farengeit(celsium):
-    return round(celsium * 9 / 5 + 32, 2);
+    return round(celsium * 9 / 5 + 32, 2)
 
 
 def console_ctf():

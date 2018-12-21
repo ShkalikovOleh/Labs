@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <math.h>
+#include <iostream>
 
 void task1();
 

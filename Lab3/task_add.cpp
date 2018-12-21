@@ -6,20 +6,26 @@ std::stack<int> p1, p2, p3;
 
 extern void move(int n, std::stack<int>&from, std::stack<int> &to, std::stack<int> &indep);
 
-void print() {	
+void print() {
+	auto tp1 = p1;
+	auto tp2 = p2;
+	auto tp3 = p3;
 	std::cout << "Piramid 1" << std::endl;
-	for (auto it = p1._Get_container().begin(); it != p1._Get_container().end(); it++){
-		std::cout << *it << std::endl;
+	while(!tp1.empty()){
+		std::cout << tp1.top() << std::endl;
+		tp1.pop();
 	}
 	std::cout << std::endl;
 	std::cout << "Piramid 2" << std::endl;
-	for (auto it = p2._Get_container().begin(); it != p2._Get_container().end(); it++) {
-		std::cout << *it << std::endl;
+	while(!tp1.empty()){
+		std::cout << tp2.top() << std::endl;
+		tp2.pop();
 	}
 	std::cout << std::endl;
 	std::cout << "Piramid 3" << std::endl;
-	for (auto it = p3._Get_container().begin(); it != p3._Get_container().end(); it++) {
-		std::cout << *it << std::endl;
+	while(!tp3.empty()){
+		std::cout << tp3.top() << std::endl;
+		tp3.pop();
 	}
 }
 

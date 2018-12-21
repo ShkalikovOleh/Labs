@@ -1,7 +1,4 @@
 #include "Task.h"
-#include <vector>
-#include <iostream>
-#include <math.h>
 
 void task3for(std::vector<int> data) {
 	double prod = 0;

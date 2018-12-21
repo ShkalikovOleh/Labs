@@ -1,5 +1,4 @@
 #include "Task.h"
-#include <iostream>
 
 void task2() {
 	std::cout << "Please choose menu item" << std::endl;

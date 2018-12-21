@@ -1,5 +1,4 @@
 #include "Task.h"
-#include <iostream>
 
 void add_task(long int number) {
 	int sum1 = 0;
