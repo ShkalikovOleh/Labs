@@ -4,7 +4,7 @@
 
 template<typename T>
 ListItem<T>::ListItem(){
-    value = default(T);
+    value = T();
     next = nullptr;
 }
 
@@ -50,7 +50,7 @@ List<T>::Iterator::Iterator(ListItem<T>& item) {
 }
 
 template<typename T>
-List<T>::Iterator::Iterator(const Iterator& iter) {
+List<T>::Iterator::Iterator(const List<T>::Iterator& iter) {
 	pointer = iter.pointer;
 }
 
@@ -80,7 +80,7 @@ typename List<T>::Iterator List<T>::Iterator::operator--(int) {
 
 template<typename T>
 typename List<T>::Iterator List<T>::Iterator::operator+(unsigned long offset) {	
-	Iterator res = *this;
+	List<T>::Iterator res = *this;
 	while (offset > 0) {
 		res = res.pointer->next;
 		offset--;
@@ -99,7 +99,7 @@ typename List<T>::Iterator List<T>::Iterator::operator+=(unsigned long offset) {
 
 template<typename T>
 typename List<T>::Iterator List<T>::Iterator::operator-(unsigned long offset) {
-	iterator res = *this;
+	List<T>::Iterator res = *this;
 	while (offset > 0) {
 		res = res.pointer->before;
 		offset--;
@@ -117,12 +117,12 @@ typename List<T>::Iterator List<T>::Iterator::operator-=(unsigned long offset) {
 }
 
 template<typename T>
-bool List<T>::Iterator::operator==(const Iterator& iter) {
+bool List<T>::Iterator::operator==(const List<T>::Iterator& iter) {
 	return iter.pointer == pointer;
 }
 
 template<typename T>
-bool List<T>::Iterator::operator!=(const Iterator& iter) {
+bool List<T>::Iterator::operator!=(const List<T>::Iterator& iter) {
 	return !operator==(iter);
 }
 
@@ -148,7 +148,7 @@ List<T>::List(){
 
 template<typename T>
 List<T>::List(T& value){
-    head = new ListItem(value);
+    head = new ListItem<T>(value);
     size = 1;
 }
 
@@ -157,7 +157,7 @@ List<T>::List(const List<T>& list){
     ListItem<T>* currentInOther = list.head;
     ListItem<T>* currentInternal = head;
     while(currentInOther){
-        currentInternal = new ListItem(currentInOther->value);
+        currentInternal = new ListItem<T>(currentInOther->value);
         currentInternal->before = currentInOther->before;
         currentInOther = currentInOther->next;
     }
@@ -194,8 +194,8 @@ typename List<T>::Iterator List<T>::GetAt(unsigned long position){
 }
 
 template<typename T>
-void List<T>::AddItemBefore(T& value, Iterator& iter){
-    ListItem<T>* newItem = new ListItem(value);
+void List<T>::AddItemBefore(T& value, List<T>::Iterator& iter){
+    ListItem<T>* newItem = new ListItem<T>(value);
     iter.pointer->before = newItem;
     newItem->next = iter.pointer;
     Iterator before = --iter;
@@ -205,8 +205,8 @@ void List<T>::AddItemBefore(T& value, Iterator& iter){
 }
 
 template<typename T>
-void List<T>::AddItemAfter(T& value, Iterator& iter){
-    ListItem<T>* newItem = new ListItem(value);
+void List<T>::AddItemAfter(T& value, List<T>::Iterator& iter){
+    ListItem<T>* newItem = new ListItem<T>(value);
     iter.pointer->next = newItem;
     newItem->before = iter.pointer;
     Iterator next = ++iter;
@@ -216,7 +216,7 @@ void List<T>::AddItemAfter(T& value, Iterator& iter){
 }
 
 template<typename T>
-void List<T>::Remove(Iterator& iter){   
+void List<T>::Remove(List<T>::Iterator& iter){   
     if(iter.pointer->next && iter.pointer->before){
         iter.pointer->next->before = iter.pointer->before;
         iter.pointer->before->next = iter.pointer->next;

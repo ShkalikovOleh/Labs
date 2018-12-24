@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+template<typename T> class List;
+
 template<typename T>
 class ListItem{
 public:
@@ -16,8 +18,8 @@ private:
     ListItem* next;
     ListItem* before;
 
-    template<typename T> friend class List;
-    template<typename T> friend class List<T>::Iterator;
+    friend class List<T>;
+    friend class List<T>::Iterator;
 };
 
 template<typename T>
@@ -57,7 +59,7 @@ public:
     private:
         ListItem<T>* pointer;
 
-        template<typename T> friend class List<T>;
+        friend class List<T>;
     };
 
     #pragma endregion
@@ -79,6 +81,6 @@ private:
     unsigned long size;            
 };
 
-#include "List.cpp";
+#include "List.cpp"
 
 #endif
