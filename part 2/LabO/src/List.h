@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <ostream>
+
 template<typename T> class List;
 
 template<typename T>

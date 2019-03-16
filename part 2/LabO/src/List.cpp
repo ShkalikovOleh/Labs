@@ -1,4 +1,5 @@
 #include "List.h"
+#include <ostream>
 
 #pragma region ListItemImpl
 
@@ -260,3 +261,12 @@ void List<T>::Clear(){
 }
 
 #pragma endregion
+
+template<typename T>
+std::ostream& operator<<(std::ostream& stream, const List<T>& list)
+{
+    for(auto it = list.begin(); it != list.end(); it++)
+    {
+        stream << *it;
+    }
+}
