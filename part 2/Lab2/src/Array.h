@@ -9,95 +9,57 @@ class IContainer
   public:
     virtual size_t GetSize() const = 0;
     virtual void Clear() = 0;
-    virtual const T& operator[](size_t) = 0;
-  protected:
-    size_t size;
+    virtual const T& operator[](unsigned long) = 0;
 };
 
 template<class T>
-class IAddable
+class IAddable: public IContainer<T>
 {
   public:
-    virtual T& operator+(const IAddable&) = 0;
+    virtual IAddable<T>& operator+(IAddable&) = 0;
 };
 
 template<class T>
-class IProductable
+class IProductable: public IContainer<T>
 {
   public:
-    virtual T& operator*(const IProductable&) = 0;
+    virtual IProductable<T>& operator*(IProductable&) = 0;
 };
 
-template <class T = int>
-class Array: //public IContainer<T>, public IAddable<T>, public IProductable<T>
+template <class T>
+class Array: public IAddable<T>, public IProductable<T>
 {
   public:
     //ctors
     Array();
     Array(size_t);
-    Array(const Array &);
+    Array(const Array&);
     ~Array();
 
-//iterators
-#pragma region Iterator
-
-    class Iterator
-    {
-      template<class T>
-      friend class Array<T>;
-
-      public:
-        Iterator();
-        Iterator(unsigned long);
-        Iterator(const Iterator &);        
-
-        Iterator operator++();    //prefix
-        Iterator operator++(int); //postfix
-
-        Iterator operator--();    //prefix
-        Iterator operator--(int); //postfix
-
-        Iterator operator+(unsigned long offset);
-        Iterator operator+=(unsigned long offset);
-        Iterator operator-(unsigned long offset);
-        Iterator operator-=(unsigned long offset);
-
-        bool operator==(const Iterator &);
-        bool operator!=(const Iterator &);
-        T operator*();
-        T *operator->();
-
-      private:
-        size_t position;
-    };
-
-#pragma endregion
-
-    //iterators methods
-    Iterator begin();
-    Iterator end();
-
     //functionality
-    size_t GetSize() const;
-    Iterator GetAt(size_t);
-    template<class...Type> 
-    void Add(Type...);
-    void Remove(Iterator &);    
-    Iterator Find(T &) const;
+    size_t GetSize() const;    
+    void Add(T&);
+    void Remove(unsigned long);
+    unsigned int Find(T&) const;
     void Clear();
+    
+    const T& operator[](unsigned long);
+    IAddable<T>& operator+(IAddable<T>&);
+    IProductable<T>& operator*(IProductable<T>&);
 
-    friend std::ostream& operator<<(std::ostream&, const Array<T>& array);
-    //friend std::istream& operator>>(std::istream&, Array<T>& array);
+    friend std::ostream& operator<<(std::ostream&, const Array<T>&);
+    friend std::istream& operator>>(std::istream&, Array<T>&);
 
   protected:
     T* data;
-    unsigned long capacity;
-    unsigned long size;
+    size_t capacity;
+    size_t size;
     void scale();
     void unscale();
 };
 
 class OverflowOffsetExeception{};
+class DifferentSizeException{};
 
 #include "Array.cpp"
 

@@ -1,107 +1,6 @@
 #include "Array.h"
 #include <ostream>
-
-#pragma region IteratorImpl
-
-template<typename T>
-Array<T>::Iterator::Iterator(){
-    position = 0;
-}
-
-template<typename T>
-Array<T>::Iterator::Iterator(const Array<T>::Iterator& iter) {
-	position = iter.position;
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator++() {
-	return end();
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator++(int) {
-	auto res = this;
-	res.position++;
-	return res;
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator--() {
-	position++;
-	return this;
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator--(int) {
-	if(position > 1)
-        auto res = Iterator();
-	return res;
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator+(unsigned long offset) {	
-	auto temp = position - offset;
-    if(size < temp)
-        position = temp;
-	return *this;
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator+=(unsigned long offset) {
-	auto temp = offset + position;
-    if(size < temp)
-        return Array<T>::Iterator(temp);
-    else
-        throw OverflowOffsetExeception;
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator-(unsigned long offset) {
-	auto temp = position - offset;
-    if(temp > 0)
-        return Array<T>::Iterator(temp);
-    else
-        throw OverflowOffsetExeception;
-}
-
-template<typename T>
-typename Array<T>::Iterator Array<T>::Iterator::operator-=(unsigned long offset) {
-	auto temp = position - offset;
-    if(temp > 0)
-        position = temp;
-	return *this;
-}
-
-template<typename T>
-bool Array<T>::Iterator::operator==(const Array<T>::Iterator& iter) {
-	return iter.position == position;
-}
-
-template<typename T>
-bool Array<T>::Iterator::operator!=(const Array<T>::Iterator& iter) {
-	return !operator==(iter);
-}
-
-template<typename T>
-T Array<T>::Iterator::operator*() {
-	return data[position];
-}
-
-template<typename T>
-T* Array<T>::Iterator::operator->() {
-	return *data[position];
-}
-
-#pragma endregion
-
-template<class T>
-void copyData(T* destination, T* source, unsigned int size)
-{
-	for(int i = 0; i < size; i++)
-		destination[i] = source[i];
-}
-
-#pragma region Array Implementation
+#include <cstring>
 
 template<class T>
 Array<T>::Array():Array(10){}
@@ -110,17 +9,17 @@ template<class T>
 Array<T>::Array(size_t capacity):size(0)
 {
 	data = new T[capacity];
-	this.capacity = capacity;
+	this->capacity = capacity;
 }
 
 template<class T>
 Array<T>::Array(const Array<T>& array)
 {
 	capacity = array.capacity;
-	size = array.size;
+	this->size = array.size;
 	delete[] data;
 	data = new T[capacity];
-	copyData(data, array.data, size);
+	memcpy(data, array.data, size);
 }
 
 template<class T>
@@ -132,8 +31,8 @@ Array<T>::~Array()
 template<class T>
 void Array<T>::scale()
 {
-	T* newData = new T[capacity * 1.5]
-	copyData(data, newData, size);
+	T* newData = new T[(int)(capacity * 1.5)];
+	memcpy(newData, data, this->size);
 	delete[] data;
 	data = newData;
 }
@@ -141,8 +40,8 @@ void Array<T>::scale()
 template<class T>
 void Array<T>::unscale()
 {
-	T* newData = new T[(int)(capacity / 2)]
-	copyData(data, newData, size);
+	T* newData = new T[(int)(capacity / 2)];
+	memcpy(newData, data, this->size);
 	delete[] data;
 	data = newData;
 }
@@ -150,50 +49,43 @@ void Array<T>::unscale()
 template<class T>
 size_t Array<T>::GetSize() const
 {
-	return size;
+	return this->size;
 }
 
 template<class T>
-typename Array<T>::Iterator Array<T>::GetAt(size_t position)
-{
-	if(position >= size)
-		throw OverflowOffsetExeception();
-	
-	return begin() + position;
-}
-
-template<class T>
-template<class...Type>
-void Array<T>::Add(Type... items)
+void Array<T>::Add(T& item)
 {
 	if(size >= capacity)
 		scale();
-	data[size] = items;
-	Add(...)
+	data[this->size] = item;
+	size++;
 }
 
 template<class T>
-void Array<T>::Remove(Array<T>::Iterator& iterator)
-{
-	iterator++;
-	for(iterator < end(); iterator++)
+void Array<T>::Remove(unsigned long position)
+{	
+	if(position < this->size)
 	{
-		*iterator-- = *iterator;
-	}	
+		for(int i = position; i < this->size - 1; i++)
+		{
+			data[i] = data[i+1];
+		}
+		this->size--;
+	}
 
-	if(size / capacity < 3)
+	if(this->size / capacity < 3)
 		unscale();
 }
 
 template<class T>
-typename Array<T>::Iterator Array<T>::Find(T& item) const
+unsigned int Array<T>::Find(T& item) const
 {
-	for(auto it = begin(); i < end(); i++)
+	for(int i = 0; i < this->size; i++)
 	{
-		if(*it == item)
-			return it;
+		if(data[i] == item)
+			return i;
 	}
-	return end();
+	return -1;
 }
 
 template<class T>
@@ -202,17 +94,64 @@ void Array<T>::Clear()
 	delete[] data;
 	data = new T[10];
 	capacity = 10;
-	size = 0;
+	this->size = 0;
+}
+
+template<class T>
+const T& Array<T>::operator[](unsigned long position)
+{
+	if(position >= this->size && this->size < 0)
+		throw OverflowOffsetExeception();
+	
+	return data[position];
+}
+
+template<class T>
+IAddable<T>& Array<T>::operator+(IAddable<T>& array)
+{
+	if(array.GetSize() == this->size)
+	{
+		Array<T> result = Array<T>(this->size);
+		for(int i = 0; i < this->size; i++)
+		{
+			result.data[i] = data[i] + array[i];
+		}
+		return result;
+	}
+	throw DifferentSizeException();
+}
+
+template<class T>
+IProductable<T>& Array<T>::operator*(IProductable<T>& array)
+{
+	if(array.GetSize() == this->size)
+	{
+		Array<T> result = Array<T>(this->size);
+		for(int i = 0; i < this->size; i++)
+		{
+			result.data[i] = data[i] * array[i];
+		}
+		return result;
+	}
+	throw DifferentSizeException();
 }
 
 template<class T>
 std::ostream& operator<<(std::ostream& stream, const Array<T>& array)
 {
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < array.size; i++)
 	{
-		ostream << i + 1 + ". " + array.data[i] + std::endl;
+		stream << i + 1 + ". " + array.data[i] + std::endl;
 	}
-	stream << "#" << endl;
 }
 
-#pragma endregion
+template<class T>
+std::istream& operator>>(std::istream& stream, Array<T>& array)
+{
+	T item = T();
+	while(stream >> item)
+	{		
+		array.Add(item);
+	}
+	return stream;
+}
