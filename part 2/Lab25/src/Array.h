@@ -80,6 +80,25 @@ class Array: public IAddable<T>, public IProductable<T>
     void unscale();
 };
 
+template<class T>
+class FixedArray: public Array<T>
+{
+  public:
+    FixedArray(T min, T max): min(min), max(max){}    
+
+    void Add(T& item)
+    {
+      if(item >= min && item <= max)
+      {
+        this->Array<T>::Add(item);
+      }
+    }
+
+  private:
+    T min;
+    T max;
+};
+
 class OverflowOffsetExeception{};
 class DifferentSizeException{};
 

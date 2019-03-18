@@ -20,3 +20,24 @@ TEST(ArrayTests, outputTest)
     std::string output = stream.rdbuf()->str();
     ASSERT_EQ(output, "48\n60\n");
 }
+
+TEST(FixedArrayTest, Add)
+{
+    FixedArray<int> farray = FixedArray<int>(10, 20);
+    int a = 15, b = 48;
+    farray.Add(a);
+    farray.Add(b);
+    ASSERT_EQ(farray.GetSize(), 1);
+}
+
+TEST(FixedArrayTest, OutputTest)
+{
+    FixedArray<int> farray = FixedArray<int>(10, 20);
+    int a = 15, b = 48;
+    farray.Add(a);
+    farray.Add(b);
+    std::ostringstream stream;
+    stream << farray;
+    std::string output = stream.rdbuf()->str();
+    ASSERT_EQ(output, "15\n");
+}
