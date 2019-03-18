@@ -9,6 +9,7 @@ class IContainer
   public:
     virtual size_t GetSize() const = 0;
     virtual void Clear() = 0;
+    virtual void operator=(IContainer&) = 0;
     virtual const T& operator[](unsigned long) = 0;
 };
 
@@ -35,20 +36,41 @@ class Array: public IAddable<T>, public IProductable<T>
     Array(size_t);
     Array(const Array&);
     ~Array();
+    
+    class Iterator
+    {
+      public:
+        Iterator(T*);
+
+        Iterator& operator++();
+        Iterator operator++(int);
+        Iterator& operator--();
+        Iterator operator--(int);
+        bool operator==(const Iterator&);
+        bool operator!=(const Iterator&);
+        T* operator->(){return data;}
+        T& operator*(){return *data;}
+      private:        
+        const T* data;
+    };
+
+    Iterator& begin();
+    Iterator& end();
 
     //functionality
     size_t GetSize() const;    
     void Add(T&);
-    void Remove(unsigned long);
-    unsigned int Find(T&) const;
+    void Remove(Iterator&);
+    Iterator& Find(T&) const;
     void Clear();
     
     const T& operator[](unsigned long);
+    void operator=(IContainer<T>&);
     IAddable<T>& operator+(IAddable<T>&);
     IProductable<T>& operator*(IProductable<T>&);
-
-    friend std::ostream& operator<<(std::ostream&, const Array<T>&);
-    friend std::istream& operator>>(std::istream&, Array<T>&);
+    
+    template<class U> friend std::ostream& operator<<(std::ostream&, const Array<U>&);    
+    template<class U> friend std::istream& operator>>(std::istream&, Array<U>&);
 
   protected:
     T* data;
