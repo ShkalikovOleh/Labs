@@ -217,7 +217,7 @@ std::ostream& operator<<(std::ostream& stream, const Array<U>& array)
 {
 	for(int i = 0; i < array.size; i++)
 	{
-		stream << i + 1 + ". " + array.data[i] + std::endl;
+		stream << array.data[i] << std::endl;
 	}
 }
 
@@ -226,7 +226,12 @@ std::istream& operator>>(std::istream& stream, Array<U>& array)
 {
 	U item = U();
 	while(stream >> item)
-	{		
+	{	
+		if(stream.fail())
+		{
+			stream.setstate(std::ios::goodbit);
+			continue;
+		}
 		array.Add(item);
 	}
 	return stream;
