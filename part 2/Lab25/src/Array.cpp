@@ -5,17 +5,17 @@
 #pragma region IteratorImpl
 
 template<class T>
-Array<T>::Iterator::Iterator(T* data):data(data){}
+Iterator<T>::Iterator(T* data):data(data){}
 
 template<class T>
-typename Array<T>::Iterator& Array<T>::Iterator::operator++()
+Iterator<T>& Iterator<T>::operator++()
 {
 	++data;
 	return *this;
 }
 
 template<class T>
-typename Array<T>::Iterator Array<T>::Iterator::operator++(int)
+Iterator<T> Iterator<T>::operator++(int)
 {
 	auto temp = *this;
     ++*this;
@@ -23,14 +23,14 @@ typename Array<T>::Iterator Array<T>::Iterator::operator++(int)
 }
 
 template<class T>
-typename Array<T>::Iterator& Array<T>::Iterator::operator--()
+Iterator<T>& Iterator<T>::operator--()
 {
 	--data;
 	return *this;
 }
 
 template<class T>
-typename Array<T>::Iterator Array<T>::Iterator::operator--(int)
+Iterator<T> Iterator<T>::operator--(int)
 {
 	auto temp = *this;
     --*this;
@@ -38,13 +38,13 @@ typename Array<T>::Iterator Array<T>::Iterator::operator--(int)
 }
 
 template<class T>
-bool Array<T>::Iterator::operator==(const Iterator& iterator)
+bool Iterator<T>::operator==(const Iterator& iterator)
 {
 	return (data == iterator.data);
 }
 
 template<class T>
-bool Array<T>::Iterator::operator!=(const Iterator& iterator)
+bool Iterator<T>::operator!=(const Iterator& iterator)
 {
 	return (data != iterator.data);
 }
@@ -80,15 +80,15 @@ Array<T>::~Array()
 }
 
 template<class T>
-typename Array<T>::Iterator& Array<T>::begin()
+Iterator<T> Array<T>::begin()
 {
-	return Iterator(data);
+	return Iterator<T>(data);
 }
 
 template<class T>
-typename Array<T>::Iterator& Array<T>::end()
+Iterator<T> Array<T>::end()
 {
-	return Iterator(data + size);
+	return Iterator<T>(data + size);
 }
 
 template<class T>
@@ -125,7 +125,7 @@ void Array<T>::Add(T& item)
 }
 
 template<class T>
-void Array<T>::Remove(Array<T>::Iterator& iterator)
+void Array<T>::Remove(Iterator<T> iterator)
 {	
 	unsigned long position = (iterator.data - begin().data) / sizeof(T);
 	if(position < this->size)
@@ -142,12 +142,19 @@ void Array<T>::Remove(Array<T>::Iterator& iterator)
 }
 
 template<class T>
-typename Array<T>::Iterator& Array<T>::Find(T& item) const
+void Array<T>::Update(Iterator<T> iterator, T& item)
+{
+	if(iterator != end())
+		*iterator = item;
+}
+
+template<class T>
+Iterator<T> Array<T>::Find(T& item) const
 {
 	for(int i = 0; i < this->size; i++)
 	{
 		if(data[i] == item)
-			return Iterator(data + i);
+			return Iterator<T>(data + i);
 	}
 	return end();
 }
@@ -165,7 +172,7 @@ template<class T>
 const T& Array<T>::operator[](unsigned long position)
 {
 	if(position >= this->size && this->size < 0)
-		throw OverflowOffsetExeception();
+		throw OverflowSizeExeception();
 	
 	return data[position];
 }

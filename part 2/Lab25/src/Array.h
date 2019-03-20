@@ -28,6 +28,27 @@ class IProductable: public IContainer<T>
 };
 
 template <class T>
+class Array;
+
+template<class T>
+class Iterator
+{
+  public:
+     Iterator(T*);
+     Iterator<T>& operator++();
+     Iterator<T> operator++(int);
+     Iterator<T>& operator--();
+     Iterator<T> operator--(int);
+     bool operator==(const Iterator<T>&);
+     bool operator!=(const Iterator<T>&);
+     T* operator->(){return data;}
+     T& operator*(){return *data;}
+  private:
+    friend class Array<T>;
+    T* data;
+};
+
+template <class T>
 class Array: public IAddable<T>, public IProductable<T>
 {
   public:
@@ -35,33 +56,17 @@ class Array: public IAddable<T>, public IProductable<T>
     Array();
     Array(size_t);
     Array(const Array&);
-    ~Array();
-    
-    class Iterator
-    {
-      public:
-        Iterator(T*);
+    ~Array();    
 
-        Iterator& operator++();
-        Iterator operator++(int);
-        Iterator& operator--();
-        Iterator operator--(int);
-        bool operator==(const Iterator&);
-        bool operator!=(const Iterator&);
-        T* operator->(){return data;}
-        T& operator*(){return *data;}
-      private:        
-        const T* data;
-    };
-
-    Iterator& begin();
-    Iterator& end();
+    Iterator<T> begin();
+    Iterator<T> end();
 
     //functionality
     size_t GetSize() const;    
     void Add(T&);
-    void Remove(Iterator&);
-    Iterator& Find(T&) const;
+    void Remove(Iterator<T>);
+    virtual void Update(Iterator<T>, T&);
+    Iterator<T> Find(T&) const;
     void Clear();
     
     const T& operator[](unsigned long);
@@ -80,26 +85,7 @@ class Array: public IAddable<T>, public IProductable<T>
     void unscale();
 };
 
-template<class T>
-class FixedArray: public Array<T>
-{
-  public:
-    FixedArray(T min, T max): min(min), max(max){}    
-
-    void Add(T& item)
-    {
-      if(item >= min && item <= max)
-      {
-        this->Array<T>::Add(item);
-      }
-    }
-
-  private:
-    T min;
-    T max;
-};
-
-class OverflowOffsetExeception{};
+class OverflowSizeExeception{};
 class DifferentSizeException{};
 
 #include "Array.cpp"

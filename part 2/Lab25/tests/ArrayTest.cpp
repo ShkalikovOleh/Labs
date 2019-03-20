@@ -2,10 +2,11 @@
 #include <iostream>
 #include "../src/Array.h"
 
-TEST(ArrayTests, addTest){
+TEST(ArrayTests, addTest)
+{
     Array<int> array = Array<int>(10);
     int a = 5;
-    array.Add(a);
+    array.Add(a);    
     ASSERT_EQ(array.GetSize(), 1);
 }
 
@@ -21,23 +22,12 @@ TEST(ArrayTests, outputTest)
     ASSERT_EQ(output, "48\n60\n");
 }
 
-TEST(FixedArrayTest, Add)
+TEST(ArrayTests, indexingCorrect)
 {
-    FixedArray<int> farray = FixedArray<int>(10, 20);
-    int a = 15, b = 48;
-    farray.Add(a);
-    farray.Add(b);
-    ASSERT_EQ(farray.GetSize(), 1);
-}
-
-TEST(FixedArrayTest, OutputTest)
-{
-    FixedArray<int> farray = FixedArray<int>(10, 20);
-    int a = 15, b = 48;
-    farray.Add(a);
-    farray.Add(b);
-    std::ostringstream stream;
-    stream << farray;
-    std::string output = stream.rdbuf()->str();
-    ASSERT_EQ(output, "15\n");
+    Array<int> array = Array<int>();
+    int a = 48, b = 60;
+    array.Add(a);
+    array.Add(b);
+    ASSERT_EQ(a, array[0]);
+    ASSERT_EQ(b, array[1]);
 }
