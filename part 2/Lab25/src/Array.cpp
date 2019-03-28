@@ -80,13 +80,13 @@ Array<T>::~Array()
 }
 
 template<class T>
-Iterator<T> Array<T>::begin()
+Iterator<T> Array<T>::begin() const
 {
 	return Iterator<T>(data);
 }
 
 template<class T>
-Iterator<T> Array<T>::end()
+Iterator<T> Array<T>::end() const
 {
 	return Iterator<T>(data + size);
 }
@@ -127,7 +127,7 @@ void Array<T>::Add(T& item)
 template<class T>
 void Array<T>::Remove(Iterator<T> iterator)
 {	
-	unsigned long position = (iterator.data - begin().data) / sizeof(T);
+	unsigned long position = (iterator.data - data);
 	if(position < this->size)
 	{
 		for(int i = position; i < this->size - 1; i++)
@@ -171,7 +171,7 @@ void Array<T>::Clear()
 template<class T>
 const T& Array<T>::operator[](unsigned long position)
 {
-	if(position >= this->size && this->size < 0)
+	if(position > this->size || this->size <= 0)
 		throw OverflowSizeExeception();
 	
 	return data[position];
@@ -198,7 +198,8 @@ IAddable<T>& Array<T>::operator+(IAddable<T>& array)
 		for(int i = 0; i < this->size; i++)
 		{
 			result->data[i] = data[i] + array[i];
-		}
+			result->size++;
+		}		
 		return *result;
 	}
 	throw DifferentSizeException();
@@ -213,6 +214,7 @@ IProductable<T>& Array<T>::operator*(IProductable<T>& array)
 		for(int i = 0; i < this->size; i++)
 		{
 			result->data[i] = data[i] * array[i];
+			result->size++;
 		}
 		return *result;
 	}
