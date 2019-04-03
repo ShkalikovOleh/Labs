@@ -29,7 +29,8 @@ TEST(FixedArrayTest, CopyCtorTest)
     int a = 15, b = 48, c = 12;
     farray.Add(a);
     farray.Add(b);
+    farray.Add(c);
     FixedArray<int> cfarray = farray;
-    cfarray.Add(c);
+    cfarray.Update(++cfarray.begin(), a);
     ASSERT_NE(cfarray[1], farray[1]);
 }

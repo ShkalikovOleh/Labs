@@ -69,6 +69,18 @@ TEST(ArrayTests, outputTest)
     ASSERT_EQ(output, "48\n60\n");
 }
 
+TEST(ArrayTest, inputTest)
+{
+    Array<int> array = Array<int>();
+    std::stringstream stream;
+    stream << 4 << std::endl;
+    stream << 's' << std::endl;    
+    stream << 5 << std::endl;
+    stream >> array;
+    ASSERT_EQ(array[0], 4);
+    ASSERT_EQ(array[1], 5);
+}
+
 TEST(ArrayTests, scaleTest)
 {
     Array<int> array = Array<int>(1);
@@ -127,4 +139,32 @@ TEST(ArrayTests, productCorrect)
     ASSERT_EQ(array3->GetSize(), 2);
     ASSERT_EQ(array3->operator[](0), a*c);
     ASSERT_EQ(array3->operator[](1), b*d);
+}
+
+class Hard
+{
+    public:
+        Hard():Hard(4,5){}
+        Hard(double A, double B){
+            a = A;
+            b = B;
+        }        
+        Hard operator+(const Hard& h2){
+            return Hard(h2.a + a, h2.b + b);
+        }
+        Hard operator*(const Hard& h2){
+            return Hard(h2.a * a, h2.b * b);
+        }
+    private:
+        double a;
+        double b;
+    };
+
+TEST(ArrayTest, hardTemplate)
+{
+    Array<Hard> array = Array<Hard>();
+    Hard h1 = Hard(4.0, 5.0);
+    array.Add(h1);
+    IAddable<Hard>* summ = &(array + array);
+    ASSERT_EQ(summ->GetSize(), 1);
 }

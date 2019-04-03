@@ -234,14 +234,19 @@ template<class U>
 std::istream& operator>>(std::istream& stream, Array<U>& array)
 {
 	U item = U();
-	while(stream >> item)
+	int tt = 0;
+	while(true)
 	{	
+		stream >> item;	
 		if(stream.fail())
-		{
-			stream.setstate(std::ios::goodbit);
+		{			
+			stream.clear();		
+			stream.ignore();
+			if(stream.eof())
+				break;
 			continue;
-		}
-		array.Add(item);
+		}					
+		array.Add(item);		
 	}
 	return stream;
 }

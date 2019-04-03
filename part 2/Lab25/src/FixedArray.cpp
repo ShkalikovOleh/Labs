@@ -82,7 +82,8 @@ IAddable<T>& FixedArray<T>::operator+(IAddable<T>& array)
 		else
 		{
 			result->data[i] = temp;
-		}		
+		}
+		result->size++;
 	}
 	return *result;
 }
@@ -104,7 +105,7 @@ IProductable<T>& FixedArray<T>::operator*(IProductable<T>& array)
 		{
 			result->data[i] = temp;
 		}
-		
+		result->size++;
 	}
 	return *result;
 }
