@@ -60,25 +60,29 @@ TEST(ArrayTest, clearTest)
 TEST(ArrayTests, outputTest)
 {
     Array<int> array = Array<int>();
+    Array<int> array2 = Array<int>();
     int a = 48, b = 60;
     array.Add(a);
     array.Add(b);
+    array2.Add(b);
+    array2.Add(a);
     std::ostringstream stream;
-    stream << array;
+    stream << array << array2;
     std::string output = stream.rdbuf()->str();
-    ASSERT_EQ(output, "48\n60\n");
+    ASSERT_EQ(output, "48\n60\n60\n48\n");
 }
 
 TEST(ArrayTest, inputTest)
 {
-    Array<int> array = Array<int>();
+    Array<int> array = Array<int>(1);
+    Array<int> array2 = Array<int>(1);
     std::stringstream stream;
     stream << 4 << std::endl;
-    stream << 's' << std::endl;    
+    stream << "string" << std::endl;    
     stream << 5 << std::endl;
-    stream >> array;
+    stream >> array >> array2;
     ASSERT_EQ(array[0], 4);
-    ASSERT_EQ(array[1], 5);
+    ASSERT_EQ(array2[0], 5);
 }
 
 TEST(ArrayTests, scaleTest)

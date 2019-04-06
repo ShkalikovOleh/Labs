@@ -228,6 +228,7 @@ std::ostream& operator<<(std::ostream& stream, const Array<U>& array)
 	{
 		stream << array.data[i] << std::endl;
 	}
+	return stream;
 }
 
 template<class U>
@@ -235,7 +236,7 @@ std::istream& operator>>(std::istream& stream, Array<U>& array)
 {
 	U item = U();
 	int tt = 0;
-	while(true)
+	while(array.size < array.capacity)
 	{	
 		stream >> item;	
 		if(stream.fail())
