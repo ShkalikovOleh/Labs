@@ -58,8 +58,8 @@ class Array: public IAddable<T>, public IProductable<T>
     Array(const Array&);
     ~Array();    
 
-    Iterator<T> begin();
-    Iterator<T> end();
+    Iterator<T> begin() const;
+    Iterator<T> end() const;
 
     //functionality
     size_t GetSize() const;    
