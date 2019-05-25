@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2019/04/14 16:30:20.810,=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2019/04/14 16:30:21.499,=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2019/04/14 16:33:05.121,E:\repos\Labs\part 2\Lab6\Lab6.h=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2019/04/14 16:33:05.121,E:\repos\Labs\part 2\Lab6\Lab6.dfm=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2019/04/14 16:33:05.121,E:\repos\Labs\part 2\Lab6\Lab6.cpp=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2019/04/14 16:33:16.358,E:\repos\Labs\part 2\Lab6\Project1PCH1.h=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2019/04/14 16:33:20.526,E:\repos\Labs\part 2\Lab6\Project1.cbproj=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+    <Transaction>2019/04/14 16:33:49.192,E:\repos\Labs\part 2\Lab6\MainWindows.dfm=E:\repos\Labs\part 2\Lab6\Lab6.dfm</Transaction>
+    <Transaction>2019/04/14 16:33:49.192,E:\repos\Labs\part 2\Lab6\MainWindows.h=E:\repos\Labs\part 2\Lab6\Lab6.h</Transaction>
+    <Transaction>2019/04/14 16:33:49.192,E:\repos\Labs\part 2\Lab6\MainWindows.cpp=E:\repos\Labs\part 2\Lab6\Lab6.cpp</Transaction>
+    <Transaction>2019/04/14 16:33:54.946,E:\repos\Labs\part 2\Lab6\MainWindow.h=E:\repos\Labs\part 2\Lab6\MainWindows.h</Transaction>
+    <Transaction>2019/04/14 16:33:54.946,E:\repos\Labs\part 2\Lab6\MainWindow.cpp=E:\repos\Labs\part 2\Lab6\MainWindows.cpp</Transaction>
+    <Transaction>2019/04/14 16:33:54.946,E:\repos\Labs\part 2\Lab6\MainWindow.dfm=E:\repos\Labs\part 2\Lab6\MainWindows.dfm</Transaction>
+    <Transaction>2019/04/14 16:34:01.000,E:\repos\Labs\part 2\Lab6\Lab6PCH1.h=E:\repos\Labs\part 2\Lab6\Project1PCH1.h</Transaction>
+    <Transaction>2019/04/14 16:34:01.008,E:\repos\Labs\part 2\Lab6\Lab6.cbproj=E:\repos\Labs\part 2\Lab6\Project1.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>
