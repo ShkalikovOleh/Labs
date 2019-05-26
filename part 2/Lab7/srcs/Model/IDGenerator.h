@@ -1,3 +1,6 @@
+#ifndef IDGENERATOR_H
+#define IDGENERATOR_H
+
 #include <atomic>
 
 class IDGenerator
@@ -11,3 +14,5 @@ public:
     int GetID();
     static IDGenerator& GetInstance();
 };
+
+#endif

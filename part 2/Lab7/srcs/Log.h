@@ -1,3 +1,6 @@
+#ifndef LOG_H
+#define LOG_H
+
 #include <iostream>
 #include <string>
 
@@ -15,3 +18,5 @@ public:
     StreamLog(std::ostream&);    
     void Log(std::string) noexcept;
 };
+
+#endif

@@ -1,7 +1,10 @@
+#ifndef ISCHEDULE_H
+#define ISCHEDULE_H
+
 #include "IDevice.h"
 #include "User.h"
-#include "Log.h"
 #include "IRepository.h"
+
 #include <ctime>
 #include <vector>
 
@@ -11,6 +14,7 @@ protected:
     IDevice* device;
     User* user;
     time_t scheduleDate;
+public:
     ScheduleItem(IDevice* device, time_t scheduleDate, User* user):
         device(device), scheduleDate(scheduleDate), user(user){};
 };
@@ -22,3 +26,5 @@ public:
     virtual ScheduleItem* const GetRecordByUser(User*) = 0;
     virtual ScheduleItem* const GetRecordByTime(time_t) = 0;
 };
+
+#endif

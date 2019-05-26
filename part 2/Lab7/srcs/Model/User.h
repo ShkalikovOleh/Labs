@@ -1,3 +1,6 @@
+#ifndef USER_H
+#define USER_H
+
 #include <string>
 
 class User
@@ -13,3 +16,5 @@ public:
     std::string GetName() const;
     unsigned int GetAge() const;
 };
+
+#endif
