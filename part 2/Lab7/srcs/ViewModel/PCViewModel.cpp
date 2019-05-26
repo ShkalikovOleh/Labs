@@ -1,11 +1,12 @@
 #include "PCViewModel.h"
+#include <exception>
 
 PCViewModel::PCViewModel(ILog* logger, IRepository<PC>* repository):ViewModel(logger)
 {
     computers = repository;
 }
 
-PC* const PCViewModel::GetAll() const
+std::vector<PC> PCViewModel::GetAll() const
 {
     return computers->GetAll();
 };
@@ -15,13 +16,13 @@ PC* const PCViewModel::GetByID(int ID) const
     return computers->GetByID(ID);
 };
 
-PC* const PCViewModel::FindByRAM(unsigned int ram) const
+std::vector<PC> PCViewModel::FindByRAM(unsigned int ram) const
 {
     auto condition = [ram](PC& pc){return pc.GetRAM() == ram; };
     return computers->GetRecordByCondition(condition);
 };
 
-PC* const PCViewModel::FindByCPU(std::string CPU) const
+std::vector<PC> PCViewModel::FindByCPU(std::string CPU) const
 {
     auto condition = [CPU](PC& pc){return pc.GetCPU() == CPU; };
     return computers->GetRecordByCondition(condition);
@@ -40,7 +41,7 @@ void PCViewModel::AddPC(std::string cpu, unsigned int ram)
 void PCViewModel::UpdatePC(PC* pc)
 {
     if(!pc)
-        throw 0;
+        throw std::invalid_argument("pc is null");
     auto lastPc = GetByID(pc->GetID());
     if(computers->UpdateRecord(*lastPc,*pc))
     {
@@ -52,7 +53,7 @@ void PCViewModel::UpdatePC(PC* pc)
 void PCViewModel::DeletePC(PC* pc)
 {
     if(!pc)
-        throw 0;
+        throw std::invalid_argument("pc is null");
     if(computers->DeleteRecord(*pc))
     {
         broadcast();

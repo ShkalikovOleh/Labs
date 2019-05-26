@@ -1,11 +1,12 @@
 #include "UserViewModel.h"
+#include <exception>
 
 UserViewModel::UserViewModel(ILog* logger, IRepository<User>* repository):ViewModel(logger)
 {
     users = repository;
 }
 
-User* const UserViewModel::GetAll() const
+std::vector<User> UserViewModel::GetAll() const
 {
     return users->GetAll();    
 }
@@ -15,13 +16,13 @@ User* const UserViewModel::GetByID(int ID) const
     return users->GetByID(ID);
 }
 
-User* const UserViewModel::FindByAge(unsigned int age) const
+std::vector<User> UserViewModel::FindByAge(unsigned int age) const
 {
     auto condition = [age](User& user){return user.GetAge() == age; };
     return users->GetRecordByCondition(condition);
 }
 
-User* const UserViewModel::FindByName(std::string name) const
+std::vector<User> UserViewModel::FindByName(std::string name) const
 {
     auto condition = [name](User& user){return user.GetName() == name; };
     return users->GetRecordByCondition(condition);
@@ -40,7 +41,7 @@ void UserViewModel::AddUser(std::string name, unsigned int age)
 void UserViewModel::UpdateUser(User* user)
 {
     if(!user)
-        throw 0;
+        throw std::invalid_argument("user is null");
     auto lastUser = GetByID(user->GetID());
     if(users->UpdateRecord(*lastUser, *user))
     {
@@ -52,7 +53,7 @@ void UserViewModel::UpdateUser(User* user)
 void UserViewModel::DeleteUser(User* user)
 {
     if(!user)
-        throw 0;
+        throw std::invalid_argument("user is null");
     if(users->DeleteRecord(*user))
     {
         broadcast();

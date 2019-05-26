@@ -1,5 +1,5 @@
 #include "IDevice.h"
-#include "IDGenerator.h"
+#include "../IDGenerator.h"
 
 IDevice::IDevice()
 {

@@ -1,3 +1,6 @@
+#ifndef IDEVICE_H
+#define IDEVICE_H
+
 #include <string>
 
 class IDevice
@@ -23,3 +26,5 @@ public:
     std::string GetCPU() const;
     unsigned int GetRAM() const;
 };
+
+#endif

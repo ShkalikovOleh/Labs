@@ -11,10 +11,10 @@ class UserViewModel: public ViewModel
 private:
     IRepository<User>* users;
 public:
-    User* const GetAll() const;
+    std::vector<User> GetAll() const;
     User* const GetByID(int) const;
-    User* const FindByAge(unsigned int) const;
-    User* const FindByName(std::string) const;
+    std::vector<User> FindByAge(unsigned int) const;
+    std::vector<User> FindByName(std::string) const;
     void AddUser(std::string, unsigned int);
     void UpdateUser(User*);
     void DeleteUser(User*);

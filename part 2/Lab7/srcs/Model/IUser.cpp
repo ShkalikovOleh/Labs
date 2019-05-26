@@ -1,5 +1,5 @@
 #include "User.h"
-#include "IDGenerator.h"
+#include "../IDGenerator.h"
 
 User::User(std::string name, unsigned int age)
 {
