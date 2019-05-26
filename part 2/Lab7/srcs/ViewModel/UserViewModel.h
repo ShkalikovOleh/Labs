@@ -6,7 +6,7 @@
 #include "../Log.h"
 #include "ViewModel.h"
 
-class UserViewModel: ViewModel
+class UserViewModel: public ViewModel
 {
 private:
     IRepository<User>* users;

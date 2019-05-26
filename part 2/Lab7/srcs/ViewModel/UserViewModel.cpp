@@ -39,6 +39,8 @@ void UserViewModel::AddUser(std::string name, unsigned int age)
 
 void UserViewModel::UpdateUser(User* user)
 {
+    if(!user)
+        throw 0;
     auto lastUser = GetByID(user->GetID());
     if(users->UpdateRecord(*lastUser, *user))
     {

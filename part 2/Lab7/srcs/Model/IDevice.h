@@ -20,4 +20,6 @@ public:
     PC(std::string, unsigned int);
     PC(const PC&);
     std::string GetInfo() const;
+    std::string GetCPU() const;
+    unsigned int GetRAM() const;
 };
