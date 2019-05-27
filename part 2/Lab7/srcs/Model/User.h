@@ -15,6 +15,7 @@ public:
     int GetID() const;
     std::string GetName() const;
     unsigned int GetAge() const;
+    void SetName(std::string);
 };
 
 #endif

@@ -29,3 +29,8 @@ unsigned int User::GetAge() const
 {
     return age; 
 };
+
+void User::SetName(std::string newName)
+{
+    name = newName;
+};

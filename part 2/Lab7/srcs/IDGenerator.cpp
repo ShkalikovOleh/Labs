@@ -1,5 +1,7 @@
 #include "IDGenerator.h"
 
+IDGenerator* IDGenerator::generator = nullptr;
+
 IDGenerator::IDGenerator()
 {
     current = 0;
