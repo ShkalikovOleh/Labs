@@ -1,8 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "UserTests.h"
-#include "PCTest.h"
-#include "IDGeneratorTests.h"
+#include "PCTests.h"
 #include "PCViewModelTests.h"
 #include "UserViewModelTests.h"
 

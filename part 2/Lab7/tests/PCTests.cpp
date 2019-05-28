@@ -1,21 +1,14 @@
-#include <gtest/gtest.h>
-#include "../srcs/Model/IDevice.h"
+#include "PCTests.h"
 
-class PCTests: public ::testing::Test
+void PCTests::SetUp()
 {
-protected:
-    void SetUp()
-    {
-        pc = new PC("I7-4770", 8092);
-    }
-    
-    void TearDown()
-    {
-        delete pc;
-    }
+    pc = new PC("I7-4770", 8092);
+}
 
-    PC* pc;
-};
+void PCTests::TearDown()
+{
+    delete pc;
+}
 
 TEST_F(PCTests, GetName)
 {
