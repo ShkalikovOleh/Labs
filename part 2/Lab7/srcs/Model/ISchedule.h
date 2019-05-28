@@ -20,7 +20,7 @@ protected:
     IDevice* device;
     User* user;
     Time startScheduleDate;
-    Time endScheduleDate;
+    Time endScheduleDate;    
 public:
     ScheduleItem(IDevice* device, Time begin, Time end, User* user):
         device(device), startScheduleDate(begin), endScheduleDate(end), user(user)
@@ -30,14 +30,20 @@ public:
     User* const GetUser() const{return user;}
     Time GetStartScheduledDate() const{return startScheduleDate;}
     Time GetEndScheduledDate() const{return endScheduleDate;}
+    friend bool operator==(const ScheduleItem& item1, const ScheduleItem& item2)
+    {
+        return item1.startScheduleDate == item2.startScheduleDate && 
+                item1.endScheduleDate == item2.endScheduleDate &&                
+                *item1.user == *item2.user;
+    }
 };
 
 class ISchedule: public IRepository<ScheduleItem>
 {    
 public:
-    virtual std::vector<ScheduleItem> GetRecordByDevice(IDevice*) = 0;
-    virtual std::vector<ScheduleItem> GetRecordByUser(User*) = 0;
-    virtual std::vector<ScheduleItem> GetRecordByTime(Time) = 0;
+    virtual std::vector<ScheduleItem> GetRecordByDevice(IDevice*) const = 0;
+    virtual std::vector<ScheduleItem> GetRecordByUser(User*) const = 0;
+    virtual std::vector<ScheduleItem> GetRecordByTime(Time) const = 0;
 };
 
 #endif

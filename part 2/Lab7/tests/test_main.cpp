@@ -4,6 +4,7 @@
 #include "PCTests.h"
 #include "PCViewModelTests.h"
 #include "UserViewModelTests.h"
+#include "ScheduleViewModelTests.h"
 
 GTEST_API_ main(int argc, char** argv){
     ::testing::InitGoogleTest(&argc, argv);
