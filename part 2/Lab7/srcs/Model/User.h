@@ -9,6 +9,7 @@ protected:
     int ID;
     std::string name;
     unsigned int age;
+    friend bool operator==(const User&, const User&);
 public:
     User(std::string, unsigned int);
     User(const User&);

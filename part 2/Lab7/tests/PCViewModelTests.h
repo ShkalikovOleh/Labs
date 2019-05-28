@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "MockLog.h"
+#include "MockRepository.h"
 
 #include "../srcs/Model/IDevice.h"
 #include "../srcs/Model/IRepository.h"
@@ -8,24 +9,12 @@
 
 #include <vector>
 
-class MockPCRepository: public IRepository<PC>
-{
-public:
-    MOCK_CONST_METHOD0(GetCount, unsigned long());
-    MOCK_CONST_METHOD0(GetAll, std::vector<PC>());
-    MOCK_CONST_METHOD1(GetByID, PC* const(int));
-    MOCK_CONST_METHOD1(GetRecordByCondition, std::vector<PC>(std::function<bool(PC&)>));
-    MOCK_METHOD1(AddRecord, bool(PC&));
-    MOCK_METHOD1(DeleteRecord, bool(PC&));
-    MOCK_METHOD2(UpdateRecord, bool(PC&, PC&));
-};
-
 class PCViewModelTests: public ::testing::Test
 {
 protected:
     void SetUp()
     {        
-        rep = new MockPCRepository();
+        rep = new MockRepository<PC>();
         logger = new MockLog();        
         pcvm = new PCViewModel(logger,rep);
     }
@@ -38,7 +27,7 @@ protected:
     }
 
     PCViewModel* pcvm;
-    MockPCRepository* rep;
+    MockRepository<PC>* rep;
     MockLog* logger;
 };
 
@@ -46,14 +35,14 @@ TEST_F(PCViewModelTests, GetAll)
 {   
     auto list = std::vector<PC>{PC("I7-4770", 4096),PC("I5-3220m", 8092)};
     EXPECT_CALL(*rep, GetAll() ).WillOnce(testing::Return(list) );    
-    pcvm->GetAll();
+    ASSERT_EQ(pcvm->GetAll(), list);
 }
 
 TEST_F(PCViewModelTests, GetByID)
 {
     auto pc = new PC("I7-4770", 4096);
-    EXPECT_CALL(*rep, GetByID(1) ).WillOnce(testing::Return(pc) );    
-    pcvm->GetByID(1);
+    EXPECT_CALL(*rep, GetByID(1) ).WillOnce(testing::Return(pc) );        
+    ASSERT_EQ(pcvm->GetByID(1), pc);
 }
 
 /*TEST_F(PCViewModelTests, FindByRAM)

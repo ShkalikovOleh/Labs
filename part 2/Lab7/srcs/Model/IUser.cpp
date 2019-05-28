@@ -34,3 +34,8 @@ void User::SetName(std::string newName)
 {
     name = newName;
 };
+
+bool operator==(const User& user1, const User& user2)
+{
+    return user1.name == user2.name && user1.age == user2.age;
+};
