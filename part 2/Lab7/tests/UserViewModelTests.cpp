@@ -28,6 +28,20 @@ TEST_F(UserViewModelTests, GetByID)
     ASSERT_EQ(usvm->GetByID(1), user);
 }
 
+TEST_F(UserViewModelTests, FindByName)
+{
+    auto list = std::vector<User>{User("user", 18)};
+    EXPECT_CALL(*users, GetRecordByCondition(::testing::_) ).WillOnce(testing::Return(list) );
+    usvm->FindByName("user");
+}
+
+TEST_F(UserViewModelTests, FindByAge)
+{
+    auto list = std::vector<User>{User("user", 18)};
+    EXPECT_CALL(*users, GetRecordByCondition(::testing::_) ).WillOnce(testing::Return(list) );
+    usvm->FindByAge(18);
+}
+
 TEST_F(UserViewModelTests, AddUser)
 {
     auto user = new User("user1", 18);
@@ -45,10 +59,20 @@ TEST_F(UserViewModelTests, UpdateUser)
     usvm->UpdateUser(user);
 }
 
+TEST_F(UserViewModelTests, UpdateNullUser)
+{
+    ASSERT_THROW(usvm->UpdateUser(nullptr), std::invalid_argument);
+}
+
 TEST_F(UserViewModelTests, DeleteUser)
 {
     auto user = new User("user1", 18);    
     EXPECT_CALL(*users, DeleteRecord(*user) ).WillOnce(testing::Return(true) );
     EXPECT_CALL(*logger, Log(::testing::_)).Times(1);
     usvm->DeleteUser(user);
+}
+
+TEST_F(UserViewModelTests, DeleteNullUser)
+{
+    ASSERT_THROW(usvm->DeleteUser(nullptr), std::invalid_argument);
 }

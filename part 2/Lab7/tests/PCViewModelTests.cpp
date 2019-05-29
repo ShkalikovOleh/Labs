@@ -28,12 +28,19 @@ TEST_F(PCViewModelTests, GetByID)
     ASSERT_EQ(pcvm->GetByID(1), pc);
 }
 
-/*TEST_F(PCViewModelTests, FindByRAM)
+TEST_F(PCViewModelTests, FindByRAM)
 {
     auto list = std::vector<PC>{PC("I7-4770", 4096),PC("I5-3220m", 4096)};
-    EXPECT_CALL(*rep, FindByCondition() ).WillOnce(testing::Return(list) );
+    EXPECT_CALL(*rep, GetRecordByCondition(::testing::_) ).WillOnce(testing::Return(list) );
     pcvm->FindByRAM(4096);
-}*/
+}
+
+TEST_F(PCViewModelTests, FindByCPU)
+{
+    auto list = std::vector<PC>{PC("I7-4770", 4096)};
+    EXPECT_CALL(*rep, GetRecordByCondition(::testing::_) ).WillOnce(testing::Return(list) );
+    pcvm->FindByCPU("I7-4770");
+}
 
 TEST_F(PCViewModelTests, AddPC)
 {
@@ -52,10 +59,20 @@ TEST_F(PCViewModelTests, UpdatePC)
     pcvm->UpdatePC(pc);
 }
 
+TEST_F(PCViewModelTests, UpdateNullPC)
+{
+    ASSERT_THROW(pcvm->UpdatePC(nullptr), std::invalid_argument);
+}
+
 TEST_F(PCViewModelTests, DeletePC)
 {
     auto pc = new PC("I7-4770", 4096);
     EXPECT_CALL(*rep, DeleteRecord(*pc) ).WillOnce(testing::Return(true) );
     EXPECT_CALL(*logger, Log(::testing::_)).Times(1);
     pcvm->DeletePC(pc);
+}
+
+TEST_F(PCViewModelTests, DeleteNullPC)
+{
+    ASSERT_THROW(pcvm->DeletePC(nullptr), std::invalid_argument);
 }
