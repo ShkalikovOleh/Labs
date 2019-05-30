@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019/05/01 13:00:23.000.046,=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2019/05/01 13:00:24.000.819,=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2019/05/01 13:02:59.000.266,E:\repos\Labs\part 2\Lab6\MainForm.h=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2019/05/01 13:02:59.000.266,E:\repos\Labs\part 2\Lab6\MainForm.dfm=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2019/05/01 13:02:59.000.266,E:\repos\Labs\part 2\Lab6\MainForm.cpp=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2019/05/01 13:03:32.000.278,E:\repos\Labs\part 2\Lab6\Lab6PCH1.h=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2019/05/01 13:03:39.000.086,E:\repos\Labs\part 2\Lab6\Lab6.cbproj=C:\Users\Shkal\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+    <Transaction>2019/05/01 13:22:44.000.119,=E:\repos\Labs\part 2\Lab6\Unit1.cpp</Transaction>
+    <Transaction>2019/05/01 13:24:13.000.080,=E:\repos\Labs\part 2\Lab6\File1.h</Transaction>
+    <Transaction>2019/05/01 13:25:13.000.164,E:\repos\Labs\part 2\Lab6\Crypt.h=E:\repos\Labs\part 2\Lab6\File1.h</Transaction>
+    <Transaction>2019/05/01 13:31:17.000.727,=E:\repos\Labs\part 2\Lab6\File1.cpp</Transaction>
+    <Transaction>2019/05/01 13:31:28.000.133,E:\repos\Labs\part 2\Lab6\Crypt.cpp=E:\repos\Labs\part 2\Lab6\File1.cpp</Transaction>
+  </Transactions>
+</BorlandProject>
