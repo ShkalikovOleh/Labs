@@ -55,18 +55,17 @@ int main() {
 	return 0;
 }
 
-//Перевод 10 в b
-//b - показатель системы счисления до 16, data - число для перевода
+//print hex
 void add_task1(int b, int data) {
 	std::stack<int> q = std::stack<int>();
-	//Записуем остатки от деления в стек
+	
 	while (data > b) {
 		int temp = data % b;
 		q.push(temp);
 		data = data / b;
 	}
 	std::cout << data;
-	//Выводим в обратном порядке и получаем число в нужной системе счисления
+	
 	while (!q.empty())
 	{
 		auto temp = q.top();
@@ -104,8 +103,7 @@ void add_task1(int b, int data) {
 	std::cout << std::endl;
 }
 
-//Перевод b в 10
-//b - показатель системы счисления, data - контейнер, поэлементно содержащий цифры числа
+//print number in b system
 void add_task2(int b, std::vector<int> data)
 {
 	int sum = 0;
