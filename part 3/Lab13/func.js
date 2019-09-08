@@ -39,3 +39,13 @@ var Student = class
             this.course++;
     }
 }
+
+function printReverse(arr)
+{
+    if(Array.isArray(arr))
+    {
+        for(i = arr.length -1; i >=0; i--){
+            print(arr[i]);
+        }
+    }
+}
