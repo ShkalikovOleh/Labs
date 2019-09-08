@@ -5,8 +5,10 @@
     <title>Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css"/>
-    <link rel="stylesheet" href="form.css"/>
-    <script src="scripts.js"></script>
+    <link rel="stylesheet" href="form.css"/>    
+    <script type="text/javascript" src="assets/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/jquery/jquery.validate.min.js"></script>
+    <script src="form.js"></script>
 </head>
 
 <html>
@@ -28,10 +30,10 @@
         <div id="content"> 
             <h1>Are you member?</h1>
             <h2>Add yourself</h2>
-            <form accept-charset="utf-8">
+            <form accept-charset="utf-8" onsubmit="return ValidateForm()">
                 <section class="form-element">
                     <label>Name</label>
-                    <input type="text" placeholder="Your name" required>
+                    <input type="text" id="#Name" name="Name" placeholder="Your name" required>
                 </section>                
 
                 <section class="form-element">
@@ -67,7 +69,7 @@
                         sequi iure facere cum sapiente deserunt, ipsa amet hic 
                         repellat non quibusdam sit laboriosam?
                     </p>
-                    <div class="btn-ok">OK</div>
+                    <div class="btn-ok" onclick="ClosePopup()">OK</div>
                 </div>                
             </div>
         </div>   
