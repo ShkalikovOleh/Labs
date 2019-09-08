@@ -1,4 +1,4 @@
-var Student = class
+class Student
 {
     constructor(name, surname, age, course)
     {
@@ -42,10 +42,12 @@ var Student = class
 
 function printReverse(arr)
 {
+    revArr = [];
     if(Array.isArray(arr))
     {
         for(i = arr.length -1; i >=0; i--){
-            print(arr[i]);
+            revArr = arr[i];
         }
     }
+    return revArr;
 }
