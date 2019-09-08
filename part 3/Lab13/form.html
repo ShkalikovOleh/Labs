@@ -3,6 +3,7 @@
     <meta lang="en"/>
     <meta charset="utf-8"/>
     <title>Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="form.css"/>
     <script src="scripts.js"></script>
@@ -24,30 +25,51 @@
             </ul>            
         </header>
 
-        <div id="content">            
+        <div id="content"> 
+            <h1>Are you member?</h1>
+            <h2>Add yourself</h2>
             <form accept-charset="utf-8">
-                <p>Name:</p>
-                <input type="text" placeholder="Your name" required>
+                <section class="form-element">
+                    <label>Name</label>
+                    <input type="text" placeholder="Your name" required>
+                </section>                
 
-                <p>Email:</p>
-                <input type="email" placeholder="xxx@xxx.xxx" required>
+                <section class="form-element">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="xxx@xxx.xxx" required>
+                </section>                
             
-                <p>Avatar:</p>
-                <input type="file">
+                <section class="form-element">
+                    <label>Avatar logo file</label>
+                    <input type="file" accept="image/*">
+                </section>                
             
-                <p>Bithday:</p>
-                <input type="date" required>
-            
-                <p>Gender:</p>
-                <p><input type="radio" id="IsMale" name="IsMale" value="1">Male</p>
-                <p><input type="radio" id="IsFemale" name="IsFemale" value="2">Female</p>
-                <p><input type="radio" id="IsOther" name="IsOther" value="3">Other</p>
+                <section class="form-element">
+                    <label>Birhtday</label>
+                    <input type="date" required>
+                </section>                               
 
-                <p>Description:</p>
-                <input type="text" placeholder="Something about your activities">
+                <section class="form-element description">
+                    <label>Description:</label>
+                    <textarea rows="5"></textarea>
+                </section>                
             
-                <input type="submit">
+                <section class="form-element">
+                    <input type="submit">
+                </section>                
             </form>
+
+            <div class="modal">                                
+                <div class="modal-content">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Officiis quas corrupti temporibus tenetur quo aut error 
+                        sequi iure facere cum sapiente deserunt, ipsa amet hic 
+                        repellat non quibusdam sit laboriosam?
+                    </p>
+                    <div class="btn-ok">OK</div>
+                </div>                
+            </div>
         </div>   
 
         <footer>
