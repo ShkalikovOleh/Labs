@@ -3,43 +3,59 @@
     <meta lang="en"/>
     <meta charset="utf-8"/>
     <title>Form</title>
-    <link rel="stylesheet" href="index.css"/>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="form.css"/>
     <script src="scripts.js"></script>
 </head>
 
-<header>
-    <h1>Form</h1>
-</header>
+<html>
+    <body>
+        <header>            
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>                
+                <li><a href="form.html">Form</a></li>
+                <li class="menu-expanded">
+                    <a>About</a>
+                    <div class="menu-expanded-content">                    
+                        <a href="https://github.com/ShkalikovOleh/Labs/tree/develop/part%203/Lab13">Source</a>    
+                        <a href="https://www.facebook.com/oleh.shkalikov">Facebook</a>
+                    </div>
+                </li>  
+            </ul>            
+        </header>
 
-<body> 
-    <div id="content">
-        <form accept-charset="utf-8">
-            <p>Name:</p>
-            <input type="text" placeholder="Your name" required>
-            
-            <p>Email:</p>
-            <input type="email" placeholder="xxx@xxx.xxx" required>
-    
-            <p>Avatar:</p>
-            <input type="file">
-    
-            <p>Bithday:</p>
-            <input type="date" required>
-    
-            <p>Gender:</p>
-            <p><input type="radio" id="IsMale" name="IsMale" value="1">Male</p>
-            <p><input type="radio" id="IsFemale" name="IsFemale" value="2">Female</p>
-            <p><input type="radio" id="IsOther" name="IsOther" value="3">Other</p>
-            
-            <p>Description:</p>
-            <input type="text" placeholder="Something about your activities">
-    
-            <input type="submit">
-        </form>
-    </div>   
-</body>
+        <div id="content">            
+            <form accept-charset="utf-8">
+                <p>Name:</p>
+                <input type="text" placeholder="Your name" required>
 
-<footer>    
-    <p>Shkalikov Oleh</p>    
-    <a href="https://github.com/ShkalikovOleh/Labs/part%203/Lab13">Source code</a>
-</footer>
+                <p>Email:</p>
+                <input type="email" placeholder="xxx@xxx.xxx" required>
+            
+                <p>Avatar:</p>
+                <input type="file">
+            
+                <p>Bithday:</p>
+                <input type="date" required>
+            
+                <p>Gender:</p>
+                <p><input type="radio" id="IsMale" name="IsMale" value="1">Male</p>
+                <p><input type="radio" id="IsFemale" name="IsFemale" value="2">Female</p>
+                <p><input type="radio" id="IsOther" name="IsOther" value="3">Other</p>
+
+                <p>Description:</p>
+                <input type="text" placeholder="Something about your activities">
+            
+                <input type="submit">
+            </form>
+        </div>   
+
+        <footer>
+            <p>&copy; Oleh Shkalikov - 2019</p>
+            <a href="https://github.com/ShkalikovOleh/Labs/tree/develop/part%203/Lab13">
+                <img src="assets/imgs/github.png">
+                <p>Source code</p>
+            </a>
+        </footer>
+    </body>
+</html>

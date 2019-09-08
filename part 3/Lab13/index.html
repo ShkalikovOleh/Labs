@@ -4,17 +4,25 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main</title>
+    <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="index.css"/>
     <script src="scripts.js"></script>
 </head>
 
 <html>
     <body>
-        <header>
-            <h1>IPT Portal</h1>
-            <nav id="menu">
-                
-            </nav>
+        <header>            
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>                
+                <li><a href="form.html">Form</a></li>
+                <li class="menu-expanded">
+                    <a>About</a>
+                    <div class="menu-expanded-content">                    
+                        <a href="https://github.com/ShkalikovOleh/Labs/tree/develop/part%203/Lab13">Source</a>    
+                        <a href="https://www.facebook.com/oleh.shkalikov">Facebook</a>                    
+                    </div>
+                </li>  
+            </ul>            
         </header>
         
         <div id="content">
@@ -72,7 +80,19 @@
                             <p class="member-card-birthday">01.01.1970</p>
                             <p class=member-card-desc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos cumque quasi rerum tempore accusantium vitae officiis.</p>
                         </div>
-                    </div>                   
+                    </div> 
+                    
+                    <div class="member-card">
+                        <div class="member-card-front">
+                            <img src="assets/imgs/avatar.jpeg"> 
+                        </div>
+                        <div class="member-card-back">
+                            <h1>Doe Joe</h1>
+                            <p class="member-card-birthday">01.01.1970</p>
+                            <p class=member-card-desc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos cumque quasi rerum tempore accusantium vitae officiis.</p>
+                        </div>
+                    </div>
+
                 </article>
                 
                 <article id="members-add">
