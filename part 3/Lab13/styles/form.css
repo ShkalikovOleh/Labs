@@ -15,12 +15,12 @@ form
 }
 
 .form-element
-{    
+{       
     margin-top: 20px;    
 }
 
 .form-element label
-{    
+{            
     margin-right: 15px;
     font-weight: 600;
     color: #4b6260;
@@ -35,7 +35,7 @@ form
     min-width: 200px;    
     padding: 5px;
     border: 2px solid grey;
-    border-radius: 5px;
+    border-radius: 5px;    
 }
 
 .description
@@ -78,6 +78,11 @@ form
     color: white;
     text-align: center;
     box-shadow: 0 0 5px grey;
+}
+
+.error
+{    
+    color: red !important;
 }
 
 @media screen and (max-width: 400px)
