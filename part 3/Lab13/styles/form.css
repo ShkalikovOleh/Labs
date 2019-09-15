@@ -1,0 +1,103 @@
+h2
+{
+    background-color: #4b6260;
+    padding: 15px;
+    margin: 0;
+    color: white;
+    border-radius: 20px;
+}
+
+form
+{
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-element
+{       
+    margin-top: 20px;    
+}
+
+.form-element label
+{            
+    margin-right: 15px;
+    font-weight: 600;
+    color: #4b6260;
+}
+
+.form-element input
+{       
+    float: right;
+    font-size: 16px;
+    color: #4b6260;
+    font-weight: 600;
+    min-width: 200px;    
+    padding: 5px;
+    border: 2px solid grey;
+    border-radius: 5px;    
+}
+
+.description
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.description textarea
+{    
+    font-size: 16px;
+    color: #4b6260;
+    font-weight: 600;
+    min-width: 200px;    
+    padding: 5px;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+
+.modal
+{    
+    height: 100%;
+    width: calc(100% - 20px);
+    position: fixed;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content
+{
+    background-color: #4b6260;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    width: 375px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;    
+    color: white;
+    text-align: center;
+    box-shadow: 0 0 5px grey;
+}
+
+.error
+{    
+    color: red !important;
+}
+
+@media screen and (max-width: 400px)
+{
+    .modal-content
+    {        
+        height: 100%;
+        width: calc(100% - 20px);
+    }
+}
+
+.btn-ok
+{   
+    color: #4b6260;
+    padding: 15px 20px;
+    background-color: white;
+    border-radius: 15px;
+}
