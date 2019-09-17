@@ -1,0 +1,30 @@
+version: '3'
+services:
+  apache:
+    build: ./host/
+    ports:
+        - 80:80
+    volumes:
+      - ./app:/var/www/html
+    links:
+      - mysql:db
+  
+  mysql:
+    image: mysql/mysql-server 
+    volumes:
+      - ./db:/var/lib/mysql
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: LabsDB
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql:db
+    ports:
+      - 8063:80
