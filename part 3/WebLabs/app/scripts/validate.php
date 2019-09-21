@@ -2,46 +2,53 @@
 
 $name = $_POST['name'];
 $birthday = $_POST['birthday'];
-$email = $_EMAIL['email'];
+$email = $_POST['email'];
 $desk = $_POST['desk'];
-$errorList = [];
+$errorList = array();
 
-CheckRequired($name, 'Name', $errorList)
-
-class ErrorMessage
+function CheckRequired($value, $name)
 {
-    protected $elementID;
-    protected $errorMessage;
-
-    function __construct($elementID)
-    {
-        $this->$elementID = $elementID;
-        $this->$errorMessage = "{$elementID} is incorrect"
-    }
-
-    function __construct($elementID, $errorMessage)
-    {
-        $this->$elementID = $elementID;
-        $this->$errorMessage = $errorMessage;
-    }
-}
-
-
-public function CheckRequired($value,  $id, array $errorList)
-{
+    global $errorList;
     if(empty($value))
-    {
-        $errorMessage = new ErrorMessage($id, "{$id} is required");
-        array_push($errorList, $errorMessage);
+    {        
+        array_push($errorList, "{$name} is required");
     }
 }
 
-public function CheckEmail($email, $id, array $errorList)
+function CheckEmail($email)
 {
-    if(filter_var($email))
+    global $errorList;
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
-        
+        array_push($errorList, "E-mail is incorrect");
     }
 }
+
+function CheckRegexp($value, $name, $regexp)
+{
+    global $errorList;
+    if(!filter_var(
+        $value, 
+        FILTER_VALIDATE_REGEXP,
+        array(
+             "options" => array("regexp"=>$regexp)
+        )))
+    {
+        array_push($errorList, "{$name} is incorrect");
+    }
+}
+
+CheckRequired($name, "Name");
+CheckRegexp($name, "Name", "/^[A-Za-z ]+$/");
+CheckRequired($email, "E-mail");
+CheckEmail($email);
+CheckRequired($birthday, "Birthday");
+
+echo json_encode(
+    array
+    (        
+        'errors' => $errorList
+    )
+)
 
 ?>

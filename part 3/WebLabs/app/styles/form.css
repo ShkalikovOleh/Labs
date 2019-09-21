@@ -7,7 +7,7 @@ h2
     border-radius: 20px;
 }
 
-form
+form, #form
 {
     margin: 20px 0;
     display: flex;
