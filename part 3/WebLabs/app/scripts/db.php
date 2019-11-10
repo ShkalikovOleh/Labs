@@ -1,12 +1,19 @@
 <?php
 
-$firstName = "Oleh";
-$lastName = "Shkalikov";
-$middleName = "Volodymyrovich";
-$birthday = "2001-02-28";
-$groupChipher = "FI";
-$groupNumber = 81;
-$facultyName = "IPT";
+$firstName = $_REQUEST['FirstName'];
+$lastName = $_REQUEST['LastName'];
+$middleName = $_REQUEST['MiddleName'];
+$birthday = $_REQUEST['Birthday'];
+$groupChipher = $_REQUEST['GroupCipher'];
+$groupNumber = $_REQUEST['GroupNumber'];
+$facultyName = $_REQUEST['Faculty'];
+#$firstName = "Oleh";
+#$lastName = "Shkalikov";
+#$middleName = "Volodymyrovich";
+#$birthday = "2001-02-28";
+#$groupChipher = "FI";
+#$groupNumber = 81;
+#$facultyName = "IPT";
 
 $connection = new mysqli('db', 'user', 'password', 'LabsDB');
 
@@ -71,9 +78,13 @@ $preCreateStudent->close();
 
 $result = $connection->query($getAllStudents) or die('505 :)');
 
-while($row = $result->fetch_assoc())
+if($connection->affected_rows > 0)
 {
-    echo "Name: " . $row['LastName'] . ' ' . $row['FirstName'] .'</br>';
+    echo "<H1>All Students</H1>";
+    while($row = $result->fetch_assoc())
+    {
+        echo "Name: " . $row['LastName'] . ' ' . $row['FirstName'] .'</br>';
+    }
 }
 
 $connection->close();

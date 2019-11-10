@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<head>
+    <meta lang="en"/>
+    <meta charset="utf-8"/>
+    <title>Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles/styles.css"/>
+    <link rel="stylesheet" href="../styles/form.css"/>    
+</head>
+
+<html>
+    <body>
+        <header>            
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>                
+                <li class="menu-expanded">
+                    <a>Form</a>
+                    <div class="menu-expanded-content">                    
+                        <a href="form-html-validation.html">HTML Validation</a>    
+                        <a href="form-js-validation.html">Vanilla JS Validation</a>
+                        <a href="form-jquery-validation.html">JQuery Validate</a>
+                        <a href="form-php-js.html">PHP JS Validate</a>
+                        <a href="form-php-jquery.html">PHP JQuery Validate</a>
+                        <a href="db-php-jquery.html">PHP JQuery Validate</a>
+                    </div>
+                </li>  
+                <li class="menu-expanded">
+                    <a>About</a>
+                    <div class="menu-expanded-content">                    
+                        <a href="https://github.com/ShkalikovOleh/Labs/tree/develop/part%203/WebLabs">Source</a>    
+                        <a href="https://www.facebook.com/oleh.shkalikov">Facebook</a>
+                    </div>
+                </li>  
+            </ul>            
+        </header>
+
+        <div id="content"> 
+            <h2>Add students</h2>            
+            <form accept-charset="utf-8" action="http://localhost/scripts/db.php" method="POST">
+                <section class="form-element">
+                    <label for="FirstName">First Name</label>
+                    <input type="text" id="FirstName" name="FirstName" 
+                        placeholder="Your first name"
+                        pattern="^[A-Za-z\s]+$" required />
+                </section>
+
+                <section class="form-element">
+                    <label for="LastName">Last Name</label>
+                    <input type="text" id="LastName" name="LastName"
+                            placeholder="Your last name"
+                            pattern="^[A-Za-z\s]+$" required />
+                </section>
+
+                <section class="form-element">
+                    <label for="MiddleName">Middle Name</label>
+                    <input type="text" id="MiddleName" name="MiddleName" 
+                            placeholder="Your middle name"
+                            pattern="^[A-Za-z\s]+$" />
+                </section>
+
+                <section class="form-element">
+                    <label for="Birthday">Birhtday</label>
+                    <input type="date" id="Birtdhay" name="Birthday" 
+                            pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"
+                            required />
+                </section>                               
+
+                <section class="form-element">
+                    <label for="GroupCipher">Group Cipher</label>
+                    <input type="text" id="GroupCipher" name="GroupCipher" 
+                            placeholder="Group cipher: FI"
+                            pattern="[A-Z]{2}" required />
+                </section>
+
+                <section class="form-element">
+                    <label for="GroupNumber">Group Number</label>
+                    <input type="text" id="GroupNumber" name="GroupNumber"
+                            placeholder="Group Number: 81"
+                            pattern="([0-9]{2})" required />
+                </section>
+                          
+                <section class="form-element">
+                    <label for="Faculty">Faculty</label>
+                    <input type="text" id="Faculty" name="Faculty" 
+                            placeholder="Your faculty"
+                            pattern="^[A-Z]+$" required />
+                </section>
+            
+                <section class="form-element">
+                    <input type="submit">
+                </section>                
+            </form>
+        </div>
+
+        <footer>
+            <p>&copy; Oleh Shkalikov - 2019</p>
+            <a href="https://github.com/ShkalikovOleh/Labs/tree/develop/part%203/WebLabs">
+                <img src="../assets/imgs/github.png">
+                <p>Source code</p>
+            </a>
+        </footer>
+    </body>
+</html>
