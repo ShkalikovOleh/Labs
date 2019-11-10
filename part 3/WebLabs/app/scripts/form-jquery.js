@@ -1,7 +1,4 @@
-var modal;
-var lastInput;
-
-document.addEventListener("DOMContentLoaded", function() {
+$(document).ready(function() {
     $.validator.addMethod(
         "regex",
         function(value, element, regexp) {
