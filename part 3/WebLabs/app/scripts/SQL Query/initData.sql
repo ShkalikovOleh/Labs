@@ -4,7 +4,7 @@ VALUES
 ("FMM"),
 ("FMF");
 
-INSERT Classes(Chipher,Code, FacultyId) 
+INSERT Classes(Cipher,Code, FacultyId) 
 VALUES
 ("FI",94,1), 
 ("FI",81,1),
