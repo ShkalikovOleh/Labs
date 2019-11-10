@@ -1,22 +1,24 @@
-import requests
-import datetime
+import pandas as pd
+import Utils as utils
 
-def downloadData(index):
-    url = "https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/get_provinceData.php?country=UKR&provinceID={}&year1=1991&year2=2019&type=Mean".format(index)
-    response = requests.get(url)
-    
-    if response.status_code != 200:
-        print("Error during response")
-        return
-
-    path = "data/vhi{}.{}.csv".format(index,datetime.datetime.now().strftime("%Y-%m-%d_%H-%M"))
-    with open(path, 'w') as file:
-        file.write("year,week,SMN,SMT,VCI,TCI,VHI\n")
-        for line in response.text.splitlines():
-            #data = str(line, 'utf-8')
-            if line.__contains__('/'):
-                continue            
-            line = line.replace(' ', ',',2)
-            file.write(line + '\n')
+def getVHISeriesByProvinceAndYear(df, provinceId, year):
+    return df[(df.Province == provinceId) & (df.year == year)].VHI
 
 
+def getVHISeriesByProvince(df, provinceId):
+    return df[df.Province == provinceId].VHI
+
+
+def getYearInVHIRangeByProvince(df, provinceId, min, max):
+    return df[(df.Province == provinceId) & (df.VHI >= min) & (df.VHI <= max)].year.unique()
+
+
+df = utils.uploadDataFromDirectory("data")
+
+series = getVHISeriesByProvinceAndYear(df,1,2017)
+print("Mean of 1 in 2017: {}".format(series.mean()))
+print("Min of 1 in 2017: {}".format(series.min()))
+print("Max of 1 in 2017: {}".format(series.max()))
+
+print("Medium in 1: {}".format(getYearInVHIRangeByProvince(df,1,15,35)))
+print("Critical in 1: {}".format(getYearInVHIRangeByProvince(df,1,0,15)))
