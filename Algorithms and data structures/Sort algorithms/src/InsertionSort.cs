@@ -15,7 +15,7 @@ public static partial class SortExtensions
                 int j = i - step;                
                 var current = collection[i];
 
-                while(j >= 0 && comparer.Compare(current,collection[j]) != 1)
+                while(j >= 0 && comparer.Compare(current,collection[j]) < 0)
                 {
                     collection[j + step] = collection[j];                                
                     j -= step;                    
@@ -40,7 +40,7 @@ public static partial class SortExtensions
                 int j = i - step;                
                 var current = collection[i];
 
-                while(j >= 0 && current.CompareTo(collection[j]) != 1)
+                while(j >= 0 && current.CompareTo(collection[j]) < 0)
                 {
                     collection[j + step] = collection[j];                                
                     j -= step;                    
