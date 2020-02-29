@@ -17,7 +17,7 @@ namespace tests
                 array[i] = random.Next(-100,100);
             }
                         
-            var result = array.PartialInsertionSort(new[]{0, 1, 2, 3, 4});
+            var result = array.PartialInsertionSort(3);
         }
     }
 }
