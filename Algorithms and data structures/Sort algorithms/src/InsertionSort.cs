@@ -3,41 +3,63 @@ using System.Collections.Generic;
 
 public static partial class SortExtensions
 {
+    public static IList<T> PartialInsertionSort<T>(this IList<T> collection, int step, IComparer<T> comparer)
+    {
+        if(step <= 0)
+            throw new ArgumentOutOfRangeException();
+
+        for(int s = 0; s < step; s++)
+        {
+            for(int i = s + step; i < collection.Count; i += step)
+            {
+                int j = i - step;                
+                var current = collection[i];
+
+                while(j >= 0 && comparer.Compare(current,collection[j]) != 1)
+                {
+                    collection[j + step] = collection[j];                                
+                    j -= step;                    
+                }
+
+                if(j != i - step)
+                    collection[j + step] = current;
+            }            
+        }        
+        return collection;
+    }
+
+    public static IList<T> PartialInsertionSort<T>(this IList<T> collection, int step) where T : IComparable<T>
+    {
+        if(step <= 0)
+            throw new ArgumentOutOfRangeException();
+
+        for(int s = 0; s < step; s++)
+        {
+            for(int i = s + step; i < collection.Count; i += step)
+            {
+                int j = i - step;                
+                var current = collection[i];
+
+                while(j >= 0 && current.CompareTo(collection[j]) != 1)
+                {
+                    collection[j + step] = collection[j];                                
+                    j -= step;                    
+                }
+
+                if(j != i - step)
+                    collection[j + step] = current;
+            }            
+        }        
+        return collection;
+    }
+
     public static IList<T> InsertionSort<T>(this IList<T> collection, IComparer<T> comparer)
     {
-        for(int i = 1; i < collection.Count; i++)
-        {
-            int j = i - 1;
-            var current = collection[i];
-            
-            while(j >= 0 && comparer.Compare(current, collection[j]) != 1)
-            {
-                collection[j+1] = collection[j];
-                j--;
-            }
-
-            if(j != i - 1)
-                collection[j + 1] = current;
-        }
-        return collection;
+        return collection.PartialInsertionSort(1, comparer);
     }
 
     public static IList<T> InsertionSort<T>(this IList<T> collection) where T : IComparable<T>
     {
-        for(int i = 1; i < collection.Count; i++)
-        {
-            int j = i - 1;
-            var current = collection[i];
-
-            while(j >= 0 && current.CompareTo(collection[j]) != 1)
-            {
-                collection[j+1] = collection[j];                                
-                j--;
-            }
-
-            if(j != i - 1)
-                collection[j + 1] = current;
-        }        
-        return collection;
+        return collection.PartialInsertionSort(1);
     }
 }
