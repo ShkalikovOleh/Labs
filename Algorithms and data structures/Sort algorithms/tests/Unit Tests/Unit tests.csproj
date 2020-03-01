@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\SortAlgorithm.csproj" />
+    <ProjectReference Include="..\..\src\SortAlgorithm.csproj" />
   </ItemGroup>
 
 </Project>
