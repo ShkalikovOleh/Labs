@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace tests
@@ -36,6 +37,20 @@ namespace tests
             }
 
             var result = array.PartialInsertionSort(step);
+            
+            List<List<int>> subarrays = new List<List<int>>();
+            for(int i = 0; i < step; i++)
+            {
+                var subarray = new List<int>();
+                for(int j = i; j < result.Count; j += step)
+                    subarray.Add(result[j]);
+                subarrays.Add(subarray);
+            }
+
+            foreach(var subarray in subarrays)
+            {
+                Assert.Equal(0, subarray.CountInversion());
+            }
         }
     }
 }
