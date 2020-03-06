@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 
 namespace Bencmarks
-{        
+{
+    [SimpleJob(targetCount:15)]
     public class ShellSortBenchmark
     {
         private IStepSequenceGenerator knuth = new KnuthSequence();
@@ -33,7 +34,7 @@ namespace Bencmarks
             collection.ShellSort(knuth);
         }
 
-        public static (int,int) CalculateComparationAndMoveCount(uint count, IStepSequenceGenerator generator)
+        public static (int,int) CalculateComparationAndMoveCount(int count, IStepSequenceGenerator generator)
         {
             var array = RandomGenerator.Generate(count);
             

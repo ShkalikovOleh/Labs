@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 
 namespace Bencmarks
-{        
+{           
+    [SimpleJob(targetCount:15)]
     public class InsertionSortBenchmark
     {
 
         [Benchmark]        
         [ArgumentsSource(nameof(Data))]
-        public void BenchmarkShellSequence(int[] collection, int count)
+        public void BenchmarkInsertionSort(int[] collection, int count)
         {
             collection.InsertionSort();
         }
                 
-        public static (int,int) CalculateComparationAndMoveCount(uint count)
+        public static (int,int) CalculateComparationAndMoveCount(int count)
         {
             var array = RandomGenerator.Generate(count);
             
