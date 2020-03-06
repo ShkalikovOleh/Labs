@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace tests
+namespace Bencmarks
 {
     public class MockComparer : IComparer<int>
     {

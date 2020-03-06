@@ -33,22 +33,21 @@ namespace Bencmarks
             collection.ShellSort(knuth);
         }
 
-        public IEnumerable<object[]> Data()
-        {   
-            yield return new object[] {GetRandom(100), 100};
-            yield return new object[] {GetRandom(1000), 1000};
-            yield return new object[] {GetRandom(10000), 10000};
+        public static (int,int) CalculateComparationAndMoveCount(uint count, IStepSequenceGenerator generator)
+        {
+            var array = RandomGenerator.Generate(count);
+            
+            var comparer = new MockComparer();
+            array.ShellSort(comparer, generator);
+
+            return (comparer.ComparationCount, comparer.MoveCount);
         }
 
-        private int[] GetRandom(int count)
-        {
-            Random random = new Random();
-            var array = new int[count];
-            for(int i = 0; i < count; i++)
-            {
-                array[i] = random.Next(-100,100);
-            }
-            return array;
+        public IEnumerable<object[]> Data()
+        {   
+            yield return new object[] {RandomGenerator.Generate(100), 100};
+            yield return new object[] {RandomGenerator.Generate(1000), 1000};
+            yield return new object[] {RandomGenerator.Generate(10000), 10000};
         }
     }
 }
