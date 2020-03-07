@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build benchmarks",
             "program": "${workspaceFolder}/tests/Benchmarks/bin/Debug/netcoreapp3.0/Benchmarks.dll",
-            "args": [],
+            "args": ["results"],
             "cwd": "${workspaceFolder}/tests/Benchmarks",
             "console": "internalConsole",
             "stopAtEntry": false

@@ -10,18 +10,23 @@ namespace Bencmarks
         public static IList<int> Generate(int count)
         {
             Random random = new Random();
+            var result = new int[count];
 
             if(cashe.ContainsKey(count))
-                return cashe[count];
-
-            var array = new int[count];
-            for(int i = 0; i < count; i++)
             {
-                array[i] = random.Next(-100,100);
-            }
-            cashe.Add(count, array);
-
-            return array;
+                cashe[count].CopyTo(result, 0);
+            }                
+            else
+            {
+                var array = new int[count];
+                for(int i = 0; i < count; i++)
+                {
+                    array[i] = random.Next();
+                }
+                cashe.Add(count, array);
+                array.CopyTo(result, 0);
+            }                            
+            return result;
         }
     }    
 }

@@ -5,7 +5,7 @@ namespace Bencmarks
     public class MockComparer : IComparer<int>
     {
         int compareCount = 0;
-        private int moveCount = 0;
+        int moveCount = 0;
 
         public int ComparationCount => compareCount;
 

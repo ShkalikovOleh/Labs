@@ -13,8 +13,8 @@ namespace Bencmarks
             {
                 foreach (var value in counts)
                 {                                    
-                    var line = string.Join(',', new object[] { value.Key, value.Value.Item1, value.Value.Item2, "\n" });
-                    byte[] buffer = Encoding.Unicode.GetBytes(line);
+                    var line = string.Join(',', new object[] { value.Key, value.Value.Item1, value.Value.Item2}) + "\n";
+                    byte[] buffer = Encoding.UTF8.GetBytes(line);
                     file.Write(buffer, 0, buffer.Length);
                 }
             }
@@ -32,8 +32,8 @@ namespace Bencmarks
             foreach (var count in new[]{100,1000,10000})
             {
                 insertionOperations.Add(count, InsertionSortBenchmark.CalculateComparationAndMoveCount(count));
-                shellOperations.Add(count, ShellSortBenchmark.CalculateComparationAndMoveCount(count, new KnuthSequence()));
-                knuthOperations.Add(count, ShellSortBenchmark.CalculateComparationAndMoveCount(count, new ShellSequence()));
+                knuthOperations.Add(count, ShellSortBenchmark.CalculateComparationAndMoveCount(count, new KnuthSequence()));
+                shellOperations.Add(count, ShellSortBenchmark.CalculateComparationAndMoveCount(count, new ShellSequence()));
                 hibbardOperations.Add(count, ShellSortBenchmark.CalculateComparationAndMoveCount(count, new HibbardSequence()));
             }
                                                           
