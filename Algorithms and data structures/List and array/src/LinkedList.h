@@ -82,6 +82,9 @@ public:
     list_iterator& operator--();
     list_iterator operator--(int);
 
+    list_iterator operator+(difference_type);
+    list_iterator operator-(difference_type);
+
     bool operator==(const list_iterator&);
     bool operator!=(const list_iterator&);
 

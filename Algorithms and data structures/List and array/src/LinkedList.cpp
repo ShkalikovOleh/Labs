@@ -3,7 +3,7 @@
 #pragma region LinkedList
 
 template<typename T>
-LinkedList<T>::LinkedList()
+LinkedList<T>::LinkedList() : size(0)
 {
     head = new LinkedListNode<T>();
     tail = new LinkedListNode<T>();
@@ -12,7 +12,7 @@ LinkedList<T>::LinkedList()
 }
 
 template<typename T>
-LinkedList<T>::LinkedList(std::initializer_list<T> values)
+LinkedList<T>::LinkedList(std::initializer_list<T> values) : size(0)
 {
     head = new LinkedListNode<T>();
     tail = new LinkedListNode<T>();
@@ -25,7 +25,7 @@ LinkedList<T>::LinkedList(std::initializer_list<T> values)
 }
 
 template<typename T>
-LinkedList<T>::LinkedList(const LinkedList<T>& other)
+LinkedList<T>::LinkedList(const LinkedList<T>& other) : size(0)
 {
     head = new LinkedListNode<T>();
     tail = new LinkedListNode<T>();
@@ -94,6 +94,7 @@ void LinkedList<T>::push_front(const T& value)
     node->previous = head;
     head->next->previous = node;
     node->next = head->next;
+    head->next = node;
     size++;
 }
 
@@ -104,6 +105,7 @@ void LinkedList<T>::push_front(T&& value)
     node->previous = head;
     head->next->previous = node;
     node->next = head->next;
+    head->next = node;
     size++;
 }
 
@@ -112,6 +114,7 @@ void LinkedList<T>::push_back(const T& value)
 {
     auto node = new LinkedListNode(value);
     node->previous = tail->previous;
+    node->next = tail;
     tail->previous->next = node;
     tail->previous = node;
     size++;
@@ -122,6 +125,7 @@ void LinkedList<T>::push_back(T&& value)
 {
     auto node = new LinkedListNode(std::move(value));
     node->previous = tail->previous;
+    node->next = tail;
     tail->previous->next = node;
     tail->previous = node;
     size++;
@@ -133,8 +137,8 @@ typename LinkedList<T>::iterator LinkedList<T>::insert(const_iterator position, 
     auto node = new LinkedListNode(value);
     node->previous = position.ptr;
     node->next = position.ptr->next;
-    position.ptr->next = node;
     position.ptr->next->previous = node;
+    position.ptr->next = node;
     size++;
 }
 
@@ -144,8 +148,8 @@ typename LinkedList<T>::iterator LinkedList<T>::insert(const_iterator position, 
     auto node = new LinkedListNode(std::move(value));
     node->previous = position.ptr;
     node->next = position.ptr->next;
-    position.ptr->next = node;
     position.ptr->next->previous = node;
+    position.ptr->next = node;
     size++;
 }
 
@@ -175,9 +179,10 @@ void LinkedList<T>::remove(const_iterator first, const_iterator last)
 {
     first.ptr->previous->next = last.ptr->next;
     last.ptr->next->previous = first.ptr->previous;
-    for(auto it = first; it != last++; it++)
+    for(auto it = first; it != last + 1; )
     {
-        delete it.ptr;
+        it++;
+        delete it.ptr->previous;
         size--;
     }    
 }
@@ -187,9 +192,10 @@ void LinkedList<T>::clear()
 {
     head->next = tail;
     tail->previous = head;
-    for(auto it = cbegin(); it != cend(); it++)
+    for(auto it = cbegin(); it != cend();)
     {
-        delete it.ptr;
+        it++;
+        delete it.ptr->previous;
     }
     size = 0;
 }
@@ -232,7 +238,9 @@ list_iterator<T>& list_iterator<T>::operator++()
 template<typename T>
 list_iterator<T> list_iterator<T>::operator++(int)
 {    
-    return list_iterator(ptr->next);
+    auto res = ptr;
+    ptr = ptr->next;
+    return list_iterator(res);
 }
 
 template<typename T>
@@ -245,7 +253,27 @@ list_iterator<T>& list_iterator<T>::operator--()
 template<typename T>
 list_iterator<T> list_iterator<T>::operator--(int)
 {    
-    return list_iterator(ptr->previous);
+    auto res = ptr;
+    ptr = ptr->previous;
+    return list_iterator(res);
+}
+
+template<typename T>
+list_iterator<T> list_iterator<T>::operator+(list_iterator<T>::difference_type delta)
+{    
+    auto temp = this->ptr;
+    for(int i = 0; i < delta; i++)
+        temp = temp->next;
+    return list_iterator(temp);
+}
+
+template<typename T>
+list_iterator<T> list_iterator<T>::operator-(list_iterator<T>::difference_type delta)
+{    
+    auto temp = this->ptr;
+    for(int i = 0; i < delta; i++)
+        temp = temp->previous;
+    return list_iterator(temp);
 }
 
 template<typename T>
