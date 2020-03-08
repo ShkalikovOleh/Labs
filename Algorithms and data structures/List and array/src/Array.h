@@ -4,17 +4,16 @@
 #include <iterator>
 
 template <typename ValueType>
-class base_iterator;
+class array_iterator;
 
 //Dynamic array
 template<typename T>
 class Array
 {
-private:
-    
-    using iterator = base_iterator<T>;
-    using const_iterator = base_iterator<const T>;
+    using iterator = array_iterator<T>;
+    using const_iterator = array_iterator<const T>;
 
+protected:
     size_t capacity;
     size_t size;
     T* data;
@@ -41,6 +40,7 @@ public:
     void push(const T&);
     void push(T&&);
 
+    void remove(const T&);
     void remove(const_iterator);
     void remove(const_iterator, const_iterator);
 
@@ -54,7 +54,7 @@ public:
 };
 
 template <class T>
-class base_iterator
+class array_iterator
 {
 public:
 
@@ -68,31 +68,31 @@ public:
     using pointer = T*;
     using difference_type = int;
 
-    base_iterator(real_type*);
-    base_iterator(const base_iterator&);
+    array_iterator(real_type*);
+    array_iterator(const array_iterator&);
 
     value_type& operator*();
     value_type* operator->();
-    base_iterator operator++();
-    base_iterator operator++(int);
-    base_iterator operator--();
-    base_iterator operator--(int);
+    array_iterator& operator++();
+    array_iterator operator++(int);
+    array_iterator& operator--();
+    array_iterator operator--(int);
 
-    base_iterator operator+(difference_type);
-    base_iterator operator-(difference_type);
-    base_iterator& operator+=(difference_type);
-    base_iterator& operator-=(difference_type);
+    array_iterator operator+(difference_type);
+    array_iterator operator-(difference_type);
+    array_iterator& operator+=(difference_type);
+    array_iterator& operator-=(difference_type);
 
-    base_iterator operator[](difference_type);
+    array_iterator operator[](difference_type);
 
-    difference_type operator-(const base_iterator&);
+    difference_type operator-(const array_iterator&);
 
-    bool operator==(const base_iterator&);
-    bool operator!=(const base_iterator&);
-    bool operator<(const base_iterator&);
-    bool operator<=(const base_iterator&);
-    bool operator>(const base_iterator&);
-    bool operator>=(const base_iterator&);
+    bool operator==(const array_iterator&);
+    bool operator!=(const array_iterator&);
+    bool operator<(const array_iterator&);
+    bool operator<=(const array_iterator&);
+    bool operator>(const array_iterator&);
+    bool operator>=(const array_iterator&);
 
 private:
     real_type* ptr;

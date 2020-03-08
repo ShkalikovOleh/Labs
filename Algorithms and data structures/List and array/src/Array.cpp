@@ -121,6 +121,20 @@ void Array<T>::push(T&& value)
 }
 
 template<class T>
+void Array<T>::remove(const T& value)
+{
+    std::vector<const_iterator> removeList;
+    for(auto it = cbegin(); it != cend(); it++)
+    {
+        if(*it == value)
+        {
+            removeList.push_back(it);
+            it--;
+        }            
+    }
+}
+
+template<class T>
 void Array<T>::remove(const_iterator position)
 {   
     if(position >= cend() || position < cbegin())
@@ -165,7 +179,7 @@ typename Array<T>::iterator Array<T>::insert(const_iterator position, const T& v
         increase();
     size++;
 
-    for(auto it = cend() - 2; it != position ; it--)
+    for(auto it = cend() - 2; it != position ; it--) //cend() - 2 is last item
     {        
         *(it + 1).ptr = *it;
     }        
@@ -186,7 +200,7 @@ typename Array<T>::iterator Array<T>::insert(const_iterator position, T&& value)
         increase();
     size++;
 
-    for(auto it = cend() - 2; it != position ; it--)
+    for(auto it = cend() - 2; it != position ; it--) //cend() - 2 is last item
     {        
         *(it + 1).ptr = *it;
     }        
@@ -226,7 +240,7 @@ const T& Array<T>::operator[](int index) const
 #pragma region Iterator
 
 template<class T>
-base_iterator<T>::base_iterator(base_iterator<T>::real_type* pointer)
+array_iterator<T>::array_iterator(array_iterator<T>::real_type* pointer)
 {
     if(pointer != nullptr)
         ptr = pointer;
@@ -235,123 +249,123 @@ base_iterator<T>::base_iterator(base_iterator<T>::real_type* pointer)
 }
 
 template<class T>
-base_iterator<T>::base_iterator(const base_iterator& other)
+array_iterator<T>::array_iterator(const array_iterator& other)
 {
     ptr = other.ptr;    
 }
 
 template<class T>
-inline typename base_iterator<T>::reference base_iterator<T>::operator*()
+inline typename array_iterator<T>::reference array_iterator<T>::operator*()
 {
     return *ptr;
 }
 
 template<class T>
-inline typename base_iterator<T>::pointer base_iterator<T>::operator->()
+inline typename array_iterator<T>::pointer array_iterator<T>::operator->()
 {
     return ptr;
 }
 
 template<class T>
-base_iterator<T> base_iterator<T>::operator++()
+array_iterator<T>& array_iterator<T>::operator++()
 {
     ptr++;
     return *this;
 }
 
 template<class T>
-base_iterator<T> base_iterator<T>::operator++(int)
+array_iterator<T> array_iterator<T>::operator++(int)
 {
-    base_iterator res = *this;
+    array_iterator res = *this;
     ptr++;
     return res;
 }
 
 template<class T>
-base_iterator<T> base_iterator<T>::operator--()
+array_iterator<T>& array_iterator<T>::operator--()
 {
     ptr--;
     return *this;
 }
 
 template<class T>
-base_iterator<T> base_iterator<T>::operator--(int)
+array_iterator<T> array_iterator<T>::operator--(int)
 {
-    base_iterator res = *this;
+    array_iterator res = *this;
     ptr--;
     return res;
 }
 
 template<class T>
-base_iterator<T> base_iterator<T>::operator+(base_iterator<T>::difference_type n)
+array_iterator<T> array_iterator<T>::operator+(array_iterator<T>::difference_type n)
 {
-    return base_iterator(ptr + n);
+    return array_iterator(ptr + n);
 }
 
 template<class T>
-base_iterator<T> base_iterator<T>::operator-(base_iterator<T>::difference_type n)
+array_iterator<T> array_iterator<T>::operator-(array_iterator<T>::difference_type n)
 {
-    return base_iterator(ptr - n);
+    return array_iterator(ptr - n);
 }
 
 template<class T>
-base_iterator<T>& base_iterator<T>::operator+=(base_iterator<T>::difference_type n)
+array_iterator<T>& array_iterator<T>::operator+=(array_iterator<T>::difference_type n)
 {
     ptr+=n;
     return *this;
 }
 
 template<class T>
-base_iterator<T>& base_iterator<T>::operator-=(base_iterator<T>::difference_type n)
+array_iterator<T>& array_iterator<T>::operator-=(array_iterator<T>::difference_type n)
 {
     ptr-=n;
     return *this;
 }
 
 template<class T>
-base_iterator<T> base_iterator<T>::operator[](base_iterator<T>::difference_type n)
+array_iterator<T> array_iterator<T>::operator[](array_iterator<T>::difference_type n)
 {
-    return base_iterator(ptr + n);
+    return array_iterator(ptr + n);
 }
 
 template<class T>
-inline typename base_iterator<T>::difference_type base_iterator<T>::operator-(const base_iterator<T>& other)
+inline typename array_iterator<T>::difference_type array_iterator<T>::operator-(const array_iterator<T>& other)
 {    
     return ptr - other.ptr;
 }
 
 template<class T>
-inline bool base_iterator<T>::operator==(const base_iterator& other)
+inline bool array_iterator<T>::operator==(const array_iterator& other)
 {
     return ptr == other.ptr;
 }
 
 template<class T>
-inline bool base_iterator<T>::operator!=(const base_iterator& other)
+inline bool array_iterator<T>::operator!=(const array_iterator& other)
 {
     return !operator==(other);
 }
 
 template<class T>
-inline bool base_iterator<T>::operator<(const base_iterator& other)
+inline bool array_iterator<T>::operator<(const array_iterator& other)
 {
     return ptr < other.ptr; //how if custom allocator is used?
 }
 
 template<class T>
-inline bool base_iterator<T>::operator<=(const base_iterator& other)
+inline bool array_iterator<T>::operator<=(const array_iterator& other)
 {
     return operator<(other) || operator==(other);
 }
 
 template<class T>
-inline bool base_iterator<T>::operator>(const base_iterator& other)
+inline bool array_iterator<T>::operator>(const array_iterator& other)
 {
     return !operator<=(other);
 }
 
 template<class T>
-inline bool base_iterator<T>::operator>=(const base_iterator& other)
+inline bool array_iterator<T>::operator>=(const array_iterator& other)
 {
     return !operator<(other);
 }
