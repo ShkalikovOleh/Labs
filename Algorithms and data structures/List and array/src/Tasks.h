@@ -11,7 +11,7 @@ void Load(std::istream&, Text&);
 
 std::ostream& Write(std::ostream&, const Text&);
 
-//Print words with even letter lenght without first and last character
+//Print words with odd letter lenght without first and last character
 std::ostream& Task1(std::ostream&, const Text&);
 
 //Print all words(without first) if word's letters in alphabetic order(a, ab, abc, ...)
@@ -23,7 +23,7 @@ std::ostream& Task3(std::ostream&, const Text&);
 /*
 Print all words, that not equal to first word
 If words count less than 2 -> print message, otherwise:
-If even letters count -> without last
+If odd letters count -> without last
 Otherwise -> double first
 */
 std::ostream& Task4(std::ostream&, const Text& text);

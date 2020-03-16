@@ -26,7 +26,7 @@ LinkedList<T, Allocator>::LinkedList(std::initializer_list<T> values) : _size(0)
     _tail->previous = _head;
     for (auto &&value : values)
     {
-        push_back(std::move(value));
+        push_back(value);
     } 
 }
 
@@ -40,7 +40,7 @@ LinkedList<T, Allocator>::LinkedList(const LinkedList<T, Allocator>& other) : _s
 
     _head->next = _tail;
     _tail->previous = _head;
-    for (auto &value : other)
+    for (auto &&value : other)
     {
         push_back(value);
     }
