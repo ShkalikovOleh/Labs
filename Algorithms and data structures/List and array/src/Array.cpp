@@ -5,15 +5,13 @@
 template<typename T, typename Allocator>
 Array<T, Allocator>::Array(size_t capacity) : size(0), capacity(capacity)
 {   
-    data = allocator.allocate(capacity);
-    //data = reinterpret_cast<T*>(new char[capacity * sizeof(T)]);
+    data = allocator.allocate(capacity);    
 }
 
 template<typename T, typename Allocator>
 Array<T, Allocator>::Array(std::initializer_list<T> list): size(0)
 {
-    capacity = list.size();
-    //data = reinterpret_cast<T*>(new char[capacity * sizeof(T)]);
+    capacity = list.size();    
     data = allocator.allocate(capacity);
     for(auto& v : list)
     {
@@ -52,6 +50,12 @@ template<typename T, typename Allocator>
 inline bool Array<T, Allocator>::empty() const noexcept
 {
     return size == 0;
+}
+
+template<typename T, typename Allocator>
+void Array<T, Allocator>::shrinkToFit() noexcept
+{
+    resize(size);
 }
 
 template<typename T, typename Allocator>

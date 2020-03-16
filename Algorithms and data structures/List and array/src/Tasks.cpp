@@ -25,6 +25,7 @@ void Load(std::istream& stream, Text& text)
             bool isEndLineOnly = (word.getSize() == 1) && (*word.cbegin() == '\n');
             if(word.getSize() != 0 && !isEndLineOnly)
             {
+                word.shrinkToFit();
                 text.push_back(word);
                 word.clear();
             }            

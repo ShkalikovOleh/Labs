@@ -33,6 +33,8 @@ public:
     size_t getCapacity() const noexcept;
     bool empty() const noexcept;
 
+    void shrinkToFit() noexcept;
+
     iterator begin() const noexcept;
     iterator end() const noexcept;
     const_iterator cbegin() const noexcept;
