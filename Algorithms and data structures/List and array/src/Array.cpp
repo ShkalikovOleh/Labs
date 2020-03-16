@@ -3,7 +3,7 @@
 #pragma region Array
 
 template<typename T, typename Allocator>
-Array<T, Allocator>::Array(size_t _capacity) : _size(0), _capacity(_capacity)
+Array<T, Allocator>::Array(size_t capacity) : _size(0), _capacity(capacity)
 {   
     _data = _allocator.allocate(_capacity);    
 }
@@ -110,12 +110,16 @@ typename Array<T, Allocator>::const_iterator Array<T, Allocator>::cend() const n
 template<typename T, typename Allocator>
 const T& Array<T, Allocator>::front() const
 {
+    if(_size == 0)
+        throw std::length_error("Array is empty");
     return _data[0];
 }
 
 template<typename T, typename Allocator>
 const T& Array<T, Allocator>::back() const
 {
+    if(_size == 0)
+        throw std::length_error("Array is empty");
     return _data[_size - 1];
 }
 
