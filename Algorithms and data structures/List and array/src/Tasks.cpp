@@ -1,5 +1,48 @@
 #include "Tasks.h"
 
+void Load(std::istream& stream, Text& text)
+{
+    char current;
+    auto word = Array<char>(1);
+
+    while (true)
+    {       
+        stream.get(current);
+
+        if(stream.eof())
+        {
+            if(word.getSize() != 0)
+                text.push_back(word);
+            break;
+        }
+            
+
+        if(current != ' ')
+            word.push(current);
+
+        if(current == ' ' || current == ',' || current == '.' || current == ';')
+        {
+            bool isEndLineOnly = (word.getSize() == 1) && (*word.cbegin() == '\n');
+            if(word.getSize() != 0 && !isEndLineOnly)
+            {
+                text.push_back(word);
+                word.clear();
+            }            
+        }        
+    }    
+}
+
+std::ostream& Write(std::ostream& stream, const Text& text)
+{
+    for(auto&& word : text)
+    {
+        for(auto&& letter : word)            
+            stream << letter;                            
+                    
+        stream << ' ';
+    }
+}
+
 std::ostream& Task1(std::ostream& stream, const Text& text)
 {
     for(auto&& word : text)

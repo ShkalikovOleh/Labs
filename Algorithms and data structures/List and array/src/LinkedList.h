@@ -1,6 +1,8 @@
 #ifndef LINKED_LIST_H
     #define LINKED_LIST_H
 
+#include <iterator>
+
 template<typename T>
 struct LinkedListNode
 {

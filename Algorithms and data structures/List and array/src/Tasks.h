@@ -7,7 +7,9 @@
 
 using Text = LinkedList<Array<char>>;
 
-std::istream Load(std::istream&, const Text&);
+void Load(std::istream&, Text&);
+
+std::ostream& Write(std::ostream&, const Text&);
 
 //Print words with even letter lenght without first and last character
 std::ostream& Task1(std::ostream&, const Text&);
@@ -25,7 +27,5 @@ If even letters count -> without last
 Otherwise -> double first
 */
 std::ostream& Task4(std::ostream&, const Text& text);
-
-#include "Tasks.cpp"
 
 #endif
