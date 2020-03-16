@@ -7,7 +7,7 @@ template <typename ValueType>
 class array_iterator;
 
 //Dynamic array
-template<typename T>
+template<typename T, typename Allocator = std::allocator<T> >
 class Array
 {
     using iterator = array_iterator<T>;
@@ -17,6 +17,7 @@ protected:
     size_t capacity;
     size_t size;
     T* data;
+    Allocator allocator;
 
     void resize(size_t);
     void increase();
@@ -25,7 +26,7 @@ protected:
 public:
     Array(size_t capacity = 10);    
     Array(std::initializer_list<T>);
-    Array(const Array<T>&);
+    Array(const Array<T, Allocator>&);
     ~Array();
 
     size_t getSize() const noexcept;

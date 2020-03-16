@@ -115,8 +115,8 @@ std::ostream& Task3(std::ostream& stream, const Text& text)
     return stream;
 }
 
-template<typename T>
-bool isEqual(const Array<T>& first, const Array<T>& second)
+template<typename T, typename Allocator>
+bool isEqual(const Array<T, Allocator>& first, const Array<T, Allocator>& second)
 {
     if(first.getSize() != second.getSize())
         return false;
