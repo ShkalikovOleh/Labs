@@ -14,10 +14,10 @@ class Array
     using const_iterator = array_iterator<const T>;
 
 protected:
-    size_t capacity;
-    size_t size;
-    T* data;
-    Allocator allocator;
+    size_t _capacity;
+    size_t _size;
+    T* _data;
+    Allocator _allocator;
 
     void resize(size_t);
     void increase();
@@ -29,8 +29,8 @@ public:
     Array(const Array<T, Allocator>&);
     ~Array();
 
-    size_t getSize() const noexcept;
-    size_t getCapacity() const noexcept;
+    size_t size() const noexcept;
+    size_t capacity() const noexcept;
     bool empty() const noexcept;
 
     void shrinkToFit() noexcept;
@@ -40,8 +40,13 @@ public:
     const_iterator cbegin() const noexcept;
     const_iterator cend() const noexcept;
 
-    void push(const T&);
-    void push(T&&);
+    const T& front() const;
+    const T& back() const;
+
+    void push_back(const T&);
+    void push_back(T&&);
+    void push_front(const T&);
+    void push_front(T&&);
 
     void remove(const T&);
     void remove(const_iterator);

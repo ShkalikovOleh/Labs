@@ -11,19 +11,19 @@ void Load(std::istream& stream, Text& text)
 
         if(stream.eof())
         {
-            if(word.getSize() != 0)
+            if(word.size() != 0)
                 text.push_back(word);
             break;
         }
             
 
         if(current != ' ')
-            word.push(current);
+            word.push_back(current);
 
         if(current == ' ' || current == ',' || current == '.' || current == ';')
         {
-            bool isEndLineOnly = (word.getSize() == 1) && (*word.cbegin() == '\n');
-            if(word.getSize() != 0 && !isEndLineOnly)
+            bool isEndLineOnly = (word.size() == 1) && (*word.cbegin() == '\n');
+            if(word.size() != 0 && !isEndLineOnly)
             {
                 word.shrinkToFit();
                 text.push_back(word);
@@ -48,7 +48,7 @@ std::ostream& Task1(std::ostream& stream, const Text& text)
 {
     for(auto&& word : text)
     {
-        size_t size = word.getSize();
+        size_t size = word.size();
         if(size % 2 != 0 && size > 2)
         {
             for(auto it = word.cbegin() + 1; it != word.cend() - 1; it++)
@@ -119,7 +119,7 @@ std::ostream& Task3(std::ostream& stream, const Text& text)
 template<typename T, typename Allocator>
 bool isEqual(const Array<T, Allocator>& first, const Array<T, Allocator>& second)
 {
-    if(first.getSize() != second.getSize())
+    if(first.size() != second.size())
         return false;
 
     for(auto it = first.cbegin(), jt = second.cbegin(); it != first.cend(); it++, jt++)
@@ -143,7 +143,7 @@ std::ostream& Task4(std::ostream& stream, const Text& text)
         {
             if(!isEqual(word, first))
             {
-                int isEven = word.getSize() % 2;
+                int isEven = word.size() % 2;
                 if(isEven)
                 {
                     for(auto it = word.cbegin(); it != word.cend() - 1; it++)
