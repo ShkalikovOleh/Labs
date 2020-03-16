@@ -122,13 +122,12 @@ void Array<T>::push(T&& value)
 
 template<class T>
 void Array<T>::remove(const T& value)
-{
-    std::vector<const_iterator> removeList;
+{    
     for(auto it = cbegin(); it != cend(); it++)
     {
         if(*it == value)
-        {
-            removeList.push_back(it);
+        {        
+            remove(it);    
             it--;
         }            
     }
