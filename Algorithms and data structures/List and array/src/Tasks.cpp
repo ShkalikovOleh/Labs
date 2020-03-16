@@ -132,7 +132,7 @@ bool isEqual(const Array<T, Allocator>& first, const Array<T, Allocator>& second
 
 std::ostream& Task4(std::ostream& stream, const Text& text)
 {
-    if(text.getSize() < 2)
+    if(text.size() < 2)
     {
         stream << "Words less than 2" << std::endl;
     }

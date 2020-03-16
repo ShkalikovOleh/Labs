@@ -3,21 +3,21 @@
 #pragma region LinkedList
 
 template<typename T>
-LinkedList<T>::LinkedList() : size(0)
+LinkedList<T>::LinkedList() : _size(0)
 {
-    head = new LinkedListNode<T>();
-    tail = new LinkedListNode<T>();
-    head->next = tail;
-    tail->previous = head;
+    _head = new LinkedListNode<T>();
+    _tail = new LinkedListNode<T>();
+    _head->next = _tail;
+    _tail->previous = _head;
 }
 
 template<typename T>
-LinkedList<T>::LinkedList(std::initializer_list<T> values) : size(0)
+LinkedList<T>::LinkedList(std::initializer_list<T> values) : _size(0)
 {
-    head = new LinkedListNode<T>();
-    tail = new LinkedListNode<T>();
-    head->next = tail;
-    tail->previous = head;
+    _head = new LinkedListNode<T>();
+    _tail = new LinkedListNode<T>();
+    _head->next = _tail;
+    _tail->previous = _head;
     for (auto &value : values)
     {
         push_back(value);
@@ -25,12 +25,12 @@ LinkedList<T>::LinkedList(std::initializer_list<T> values) : size(0)
 }
 
 template<typename T>
-LinkedList<T>::LinkedList(const LinkedList<T>& other) : size(0)
+LinkedList<T>::LinkedList(const LinkedList<T>& other) : _size(0)
 {
-    head = new LinkedListNode<T>();
-    tail = new LinkedListNode<T>();
-    head->next = tail;
-    tail->previous = head;
+    _head = new LinkedListNode<T>();
+    _tail = new LinkedListNode<T>();
+    _head->next = _tail;
+    _tail->previous = _head;
     for (auto &value : other)
     {
         push_back(value);
@@ -41,7 +41,7 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other) : size(0)
 template<typename T>
 LinkedList<T>::~LinkedList()
 {
-    auto current = head;
+    auto current = _head;
     LinkedListNode<T>* next;
     while(current)
     {
@@ -54,81 +54,97 @@ LinkedList<T>::~LinkedList()
 template<typename T>
 typename LinkedList<T>::iterator LinkedList<T>::begin() const noexcept
 {
-    return iterator(head->next);
+    return iterator(_head->next);
 }
 
 template<typename T>
 typename LinkedList<T>::iterator LinkedList<T>::end() const noexcept
 {
-    return iterator(tail);
+    return iterator(_tail);
 }
 
 template<typename T>
 typename LinkedList<T>::const_iterator LinkedList<T>::cbegin() const noexcept
 {
-    return const_iterator(head->next);
+    return const_iterator(_head->next);
 }
 
 template<typename T>
 typename LinkedList<T>::const_iterator LinkedList<T>::cend() const noexcept
 {
-    return const_iterator(tail);
+    return const_iterator(_tail);
 }
 
 template<typename T>
-size_t LinkedList<T>::getSize() const noexcept
+const T& LinkedList<T>::back() const
 {
-    return size;
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _tail->previous->data;
+}
+
+template<typename T>
+const T& LinkedList<T>::front() const
+{
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _head->next->data;
+}
+
+template<typename T>
+size_t LinkedList<T>::size() const noexcept
+{
+    return _size;
 }
 
 template<typename T>
 bool LinkedList<T>::empty() const noexcept
 {
-    return size == 0;
+    return _size == 0;
 }
 
 template<typename T>
 void LinkedList<T>::push_front(const T& value)
 {
     auto node = new LinkedListNode(value);
-    node->previous = head;
-    head->next->previous = node;
-    node->next = head->next;
-    head->next = node;
-    size++;
+    node->previous = _head;
+    _head->next->previous = node;
+    node->next = _head->next;
+    _head->next = node;
+    _size++;
 }
 
 template<typename T>
 void LinkedList<T>::push_front(T&& value)
 {
     auto node = new LinkedListNode(std::move(value));
-    node->previous = head;
-    head->next->previous = node;
-    node->next = head->next;
-    head->next = node;
-    size++;
+    node->previous = _head;
+    _head->next->previous = node;
+    node->next = _head->next;
+    _head->next = node;
+    _size++;
 }
 
 template<typename T>
 void LinkedList<T>::push_back(const T& value)
 {
     auto node = new LinkedListNode(value);
-    node->previous = tail->previous;
-    node->next = tail;
-    tail->previous->next = node;
-    tail->previous = node;
-    size++;
+    node->previous = _tail->previous;
+    node->next = _tail;
+    _tail->previous->next = node;
+    _tail->previous = node;
+    _size++;
 }
 
 template<typename T>
 void LinkedList<T>::push_back(T&& value)
 {
     auto node = new LinkedListNode(std::move(value));
-    node->previous = tail->previous;
-    node->next = tail;
-    tail->previous->next = node;
-    tail->previous = node;
-    size++;
+    node->previous = _tail->previous;
+    node->next = _tail;
+    _tail->previous->next = node;
+    _tail->previous = node;
+    _size++;
 }
 
 template<typename T>
@@ -139,7 +155,7 @@ typename LinkedList<T>::iterator LinkedList<T>::insert(const_iterator position, 
     node->next = position.ptr->next;
     position.ptr->next->previous = node;
     position.ptr->next = node;
-    size++;
+    _size++;
 }
 
 template<typename T>
@@ -150,7 +166,7 @@ typename LinkedList<T>::iterator LinkedList<T>::insert(const_iterator position, 
     node->next = position.ptr->next;
     position.ptr->next->previous = node;
     position.ptr->next = node;
-    size++;
+    _size++;
 }
 
 template<typename T>
@@ -171,7 +187,7 @@ void LinkedList<T>::remove(const_iterator position)
     position.ptr->previous->next = position.ptr->next;
     position.ptr->next->previous = position.ptr->previous;
     delete position.ptr;
-    size--;
+    _size--;
 }
 
 template<typename T>
@@ -183,21 +199,21 @@ void LinkedList<T>::remove(const_iterator first, const_iterator last)
     {
         it++;
         delete it.ptr->previous;
-        size--;
+        _size--;
     }    
 }
 
 template<typename T>
 void LinkedList<T>::clear()
 {
-    head->next = tail;
-    tail->previous = head;
+    _head->next = _tail;
+    _tail->previous = _head;
     for(auto it = cbegin(); it != cend();)
     {
         it++;
         delete it.ptr->previous;
     }
-    size = 0;
+    _size = 0;
 }
 
 #pragma endregion

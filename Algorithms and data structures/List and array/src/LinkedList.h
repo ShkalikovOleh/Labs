@@ -26,9 +26,9 @@ class LinkedList
     using const_iterator = list_iterator<const T>;
 
 private:
-    LinkedListNode<T>* head;
-    LinkedListNode<T>* tail;
-    size_t size;
+    LinkedListNode<T>* _head;
+    LinkedListNode<T>* _tail;
+    size_t _size;
 public:
     LinkedList();
     LinkedList(std::initializer_list<T>);
@@ -40,7 +40,10 @@ public:
     const_iterator cbegin() const noexcept;
     const_iterator cend() const noexcept;
 
-    size_t getSize() const noexcept;
+    const T& back() const;
+    const T& front() const;
+
+    size_t size() const noexcept;
     bool empty() const noexcept;
 
     void push_front(const T&);
