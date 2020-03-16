@@ -19,7 +19,7 @@ template<typename T>
 class list_iterator;
 
 
-template <typename T>
+template <typename T, typename Allocator = std::allocator<LinkedListNode<T>> >
 class LinkedList
 {
     using iterator = list_iterator<T>;
@@ -29,10 +29,12 @@ private:
     LinkedListNode<T>* _head;
     LinkedListNode<T>* _tail;
     size_t _size;
+    Allocator _allocator;
+
 public:
     LinkedList();
     LinkedList(std::initializer_list<T>);
-    LinkedList(const LinkedList<T>&);
+    LinkedList(const LinkedList<T, Allocator>&);
     ~LinkedList();
 
     iterator begin() const noexcept;

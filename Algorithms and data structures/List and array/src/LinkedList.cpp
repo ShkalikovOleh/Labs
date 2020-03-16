@@ -2,33 +2,42 @@
 
 #pragma region LinkedList
 
-template<typename T>
-LinkedList<T>::LinkedList() : _size(0)
+template<typename T, typename Allocator>
+LinkedList<T, Allocator>::LinkedList() : _size(0)
 {
-    _head = new LinkedListNode<T>();
-    _tail = new LinkedListNode<T>();
+    _head = _allocator.allocate(1);
+    new(_head) LinkedListNode<T>;
+    _tail = _allocator.allocate(1);
+    new(_tail) LinkedListNode<T>;
+
     _head->next = _tail;
     _tail->previous = _head;
 }
 
-template<typename T>
-LinkedList<T>::LinkedList(std::initializer_list<T> values) : _size(0)
+template<typename T, typename Allocator>
+LinkedList<T, Allocator>::LinkedList(std::initializer_list<T> values) : _size(0)
 {
-    _head = new LinkedListNode<T>();
-    _tail = new LinkedListNode<T>();
+    _head = _allocator.allocate(1);
+    new(_head) LinkedListNode<T>;
+    _tail = _allocator.allocate(1);
+    new(_tail) LinkedListNode<T>;
+
     _head->next = _tail;
     _tail->previous = _head;
-    for (auto &value : values)
+    for (auto &&value : values)
     {
-        push_back(value);
+        push_back(std::move(value));
     } 
 }
 
-template<typename T>
-LinkedList<T>::LinkedList(const LinkedList<T>& other) : _size(0)
+template<typename T, typename Allocator>
+LinkedList<T, Allocator>::LinkedList(const LinkedList<T, Allocator>& other) : _size(0)
 {
-    _head = new LinkedListNode<T>();
-    _tail = new LinkedListNode<T>();
+    _head = _allocator.allocate(1);
+    new(_head) LinkedListNode<T>;
+    _tail = _allocator.allocate(1);
+    new(_tail) LinkedListNode<T>;
+
     _head->next = _tail;
     _tail->previous = _head;
     for (auto &value : other)
@@ -38,139 +47,157 @@ LinkedList<T>::LinkedList(const LinkedList<T>& other) : _size(0)
     
 }
 
-template<typename T>
-LinkedList<T>::~LinkedList()
+template<typename T, typename Allocator>
+LinkedList<T, Allocator>::~LinkedList()
 {
     auto current = _head;
     LinkedListNode<T>* next;
     while(current)
     {
         next = current->next;
-        delete current;
+        _allocator.deallocate(current, 1);
         current = next;
     }
 }
 
-template<typename T>
-typename LinkedList<T>::iterator LinkedList<T>::begin() const noexcept
+template<typename T, typename Allocator>
+typename LinkedList<T, Allocator>::iterator LinkedList<T, Allocator>::begin() const noexcept
 {
     return iterator(_head->next);
 }
 
-template<typename T>
-typename LinkedList<T>::iterator LinkedList<T>::end() const noexcept
+template<typename T, typename Allocator>
+typename LinkedList<T, Allocator>::iterator LinkedList<T, Allocator>::end() const noexcept
 {
     return iterator(_tail);
 }
 
-template<typename T>
-typename LinkedList<T>::const_iterator LinkedList<T>::cbegin() const noexcept
+template<typename T, typename Allocator>
+typename LinkedList<T, Allocator>::const_iterator LinkedList<T, Allocator>::cbegin() const noexcept
 {
     return const_iterator(_head->next);
 }
 
-template<typename T>
-typename LinkedList<T>::const_iterator LinkedList<T>::cend() const noexcept
+template<typename T, typename Allocator>
+typename LinkedList<T, Allocator>::const_iterator LinkedList<T, Allocator>::cend() const noexcept
 {
     return const_iterator(_tail);
 }
 
-template<typename T>
-const T& LinkedList<T>::back() const
+template<typename T, typename Allocator>
+const T& LinkedList<T, Allocator>::back() const
 {
     if(_size == 0)
         throw std::length_error("Array is empty");
     return _tail->previous->data;
 }
 
-template<typename T>
-const T& LinkedList<T>::front() const
+template<typename T, typename Allocator>
+const T& LinkedList<T, Allocator>::front() const
 {
     if(_size == 0)
         throw std::length_error("Array is empty");
     return _head->next->data;
 }
 
-template<typename T>
-size_t LinkedList<T>::size() const noexcept
+template<typename T, typename Allocator>
+size_t LinkedList<T, Allocator>::size() const noexcept
 {
     return _size;
 }
 
-template<typename T>
-bool LinkedList<T>::empty() const noexcept
+template<typename T, typename Allocator>
+bool LinkedList<T, Allocator>::empty() const noexcept
 {
     return _size == 0;
 }
 
-template<typename T>
-void LinkedList<T>::push_front(const T& value)
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::push_front(const T& value)
 {
-    auto node = new LinkedListNode(value);
+    LinkedListNode<T>* node = _allocator.allocate(1);
+    new(node) LinkedListNode<T>(value);
+
     node->previous = _head;
     _head->next->previous = node;
     node->next = _head->next;
     _head->next = node;
+
     _size++;
 }
 
-template<typename T>
-void LinkedList<T>::push_front(T&& value)
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::push_front(T&& value)
 {
-    auto node = new LinkedListNode(std::move(value));
+    LinkedListNode<T>* node = _allocator.allocate(1);
+    new(node) LinkedListNode<T>(std::move(value));
+
     node->previous = _head;
     _head->next->previous = node;
     node->next = _head->next;
     _head->next = node;
+
     _size++;
 }
 
-template<typename T>
-void LinkedList<T>::push_back(const T& value)
-{
-    auto node = new LinkedListNode(value);
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::push_back(const T& value)
+{    
+    LinkedListNode<T>* node = _allocator.allocate(1);
+    new(node) LinkedListNode<T>(value);
+
     node->previous = _tail->previous;
     node->next = _tail;
     _tail->previous->next = node;
     _tail->previous = node;
+
     _size++;
 }
 
-template<typename T>
-void LinkedList<T>::push_back(T&& value)
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::push_back(T&& value)
 {
-    auto node = new LinkedListNode(std::move(value));
+    LinkedListNode<T>* node = _allocator.allocate(1);
+    new(node) LinkedListNode<T>(std::move(value));
+
     node->previous = _tail->previous;
     node->next = _tail;
     _tail->previous->next = node;
     _tail->previous = node;
+
     _size++;
 }
 
-template<typename T>
-typename LinkedList<T>::iterator LinkedList<T>::insert(const_iterator position, const T& value)
+template<typename T, typename Allocator>
+typename LinkedList<T, Allocator>::iterator LinkedList<T, Allocator>::insert(const_iterator position, const T& value)
 {
-    auto node = new LinkedListNode(value);
+    LinkedListNode<T>* node = _allocator.allocate(1);
+    new(node) LinkedListNode<T>(value);
+
     node->previous = position.ptr;
     node->next = position.ptr->next;
     position.ptr->next->previous = node;
     position.ptr->next = node;
+
     _size++;
 }
 
-template<typename T>
-typename LinkedList<T>::iterator LinkedList<T>::insert(const_iterator position, T&& value)
+template<typename T, typename Allocator>
+typename LinkedList<T, Allocator>::iterator LinkedList<T, Allocator>::insert(const_iterator position, T&& value)
 {
-    auto node = new LinkedListNode(std::move(value));
+    LinkedListNode<T>* node = _allocator.allocate(1);
+    new(node) LinkedListNode<T>(std::move(value));
+
     node->previous = position.ptr;
     node->next = position.ptr->next;
     position.ptr->next->previous = node;
     position.ptr->next = node;
+
     _size++;
 }
 
-template<typename T>
-void LinkedList<T>::remove(const T& value)
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::remove(const T& value)
 {
     for(auto it = cbegin(); it != cend(); it++)
     {
@@ -181,37 +208,37 @@ void LinkedList<T>::remove(const T& value)
     }
 }
 
-template<typename T>
-void LinkedList<T>::remove(const_iterator position)
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::remove(const_iterator position)
 {
     position.ptr->previous->next = position.ptr->next;
     position.ptr->next->previous = position.ptr->previous;
-    delete position.ptr;
+    _allocator.deallocate(position.ptr, 1);
     _size--;
 }
 
-template<typename T>
-void LinkedList<T>::remove(const_iterator first, const_iterator last)
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::remove(const_iterator first, const_iterator last)
 {
     first.ptr->previous->next = last.ptr->next;
     last.ptr->next->previous = first.ptr->previous;
     for(auto it = first; it != last + 1; )
     {
         it++;
-        delete it.ptr->previous;
+        _allocator.deallocate(it.ptr->previous, 1);
         _size--;
     }    
 }
 
-template<typename T>
-void LinkedList<T>::clear()
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::clear()
 {
     _head->next = _tail;
     _tail->previous = _head;
     for(auto it = cbegin(); it != cend();)
     {
         it++;
-        delete it.ptr->previous;
+        _allocator.deallocate(it.ptr->previous, 1);
     }
     _size = 0;
 }
