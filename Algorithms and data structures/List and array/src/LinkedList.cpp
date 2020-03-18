@@ -169,6 +169,22 @@ void LinkedList<T, Allocator>::push_back(T&& value)
 }
 
 template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::pop_back()
+{
+    if(empty())
+        throw std::length_error("List is empty");
+    remove(--cend());
+}
+
+template<typename T, typename Allocator>
+void LinkedList<T, Allocator>::pop_front()
+{
+    if(empty())
+        throw std::length_error("List is empty");
+    remove(cbegin());
+}
+
+template<typename T, typename Allocator>
 typename LinkedList<T, Allocator>::iterator LinkedList<T, Allocator>::insert(const_iterator position, const T& value)
 {
     LinkedListNode<T>* node = _allocator.allocate(1);

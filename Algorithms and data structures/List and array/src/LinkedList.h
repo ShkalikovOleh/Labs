@@ -53,6 +53,9 @@ public:
     void push_back(const T&);
     void push_back(T&&);
 
+    void pop_back();
+    void pop_front();
+
     iterator insert(const_iterator, const T&);
     iterator insert(const_iterator, T&&);
 
