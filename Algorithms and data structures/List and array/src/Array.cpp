@@ -149,7 +149,7 @@ void Array<T, Allocator>::push_front(const T& value)
     if(_size >= _capacity)
         increase();
     
-    for(int i = size - 1; i >= 0; i--)
+    for(int i = _size - 1; i >= 0; i--)
         _data[i + 1] = _data[i];
     _data[0] = value;
     
@@ -162,7 +162,7 @@ void Array<T, Allocator>::push_front(T&& value)
     if(_size >= _capacity)
         increase();
     
-    for(int i = size - 1; i >= 0; i--)
+    for(int i = _size - 1; i >= 0; i--)
         _data[i + 1] = _data[i];
     _data[0] = std::move(value);
     
@@ -188,14 +188,14 @@ void Array<T, Allocator>::pop_front()
 template<typename T, typename Allocator>
 void Array<T, Allocator>::remove(const T& value)
 {    
-    for(auto it = cbegin(); it != cend(); it++)
+    for(int i = 0; i < _size; i++)
     {
-        if(*it == value)
-        {        
-            remove(it);    
-            it--;
-        }            
-    }
+        if(_data[i] == value)
+        {
+            remove(const_iterator(_data + i));
+            i--;
+        }
+    }    
 }
 
 template<typename T, typename Allocator>
