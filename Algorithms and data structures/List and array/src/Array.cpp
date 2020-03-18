@@ -170,6 +170,22 @@ void Array<T, Allocator>::push_front(T&& value)
 }
 
 template<typename T, typename Allocator>
+void Array<T, Allocator>::pop_back()
+{
+    if(empty())
+        throw std::length_error("Array is empty");
+    remove(cend() - 1);
+}
+
+template<typename T, typename Allocator>
+void Array<T, Allocator>::pop_front()
+{
+    if(empty())
+        throw std::length_error("Array is empty");
+    remove(cbegin());
+}
+
+template<typename T, typename Allocator>
 void Array<T, Allocator>::remove(const T& value)
 {    
     for(auto it = cbegin(); it != cend(); it++)

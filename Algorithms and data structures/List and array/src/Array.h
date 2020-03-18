@@ -48,6 +48,9 @@ public:
     void push_front(const T&);
     void push_front(T&&);
 
+    void pop_back();
+    void pop_front();
+
     void remove(const T&);
     void remove(const_iterator);
     void remove(const_iterator, const_iterator);
