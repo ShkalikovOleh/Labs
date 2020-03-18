@@ -13,6 +13,18 @@ protected:
     };    
 };
 
+TEST_F(ArrayTest, copyCtorTest)
+{
+    Array<int> array = { 4, 5, 6 };
+    auto copy = array;
+    
+    EXPECT_EQ(array.size(), copy.size());
+    for(int i = 0; i < array.size(); i++)
+    {        
+        EXPECT_EQ(array[i], copy[i]);
+    }
+}
+
 TEST_F(ArrayTest, shrinkTest)
 {
     int first = _data[0];

@@ -28,4 +28,7 @@ Otherwise -> double first
 */
 std::ostream& Task4(std::ostream&, const Text& text);
 
+int countChar(const Text& text, char symbol);
+
+
 #endif

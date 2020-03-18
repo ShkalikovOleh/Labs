@@ -59,3 +59,10 @@ TEST(TasksTest, Task4Test)
 
     ASSERT_EQ("Hell\naab\n" ,out.str());
 }
+
+TEST(TasksTest, CountTest)
+{    
+    Text text = { Array<char>{ 'W', 'o', 'r', 'l', 'd' }, Array<char>{'H', 'e', 'l', 'l', 'o'}, Array<char>{ 'W', 'o', 'r', 'l', 'd' } , Array<char> { 'a', 'b' } };
+    int actual = countChar(text, 'l');
+    ASSERT_EQ(4, actual);
+}
