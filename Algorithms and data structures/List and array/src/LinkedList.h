@@ -25,7 +25,7 @@ class LinkedList
     using iterator = list_iterator<T>;
     using const_iterator = list_iterator<const T>;
 
-private:
+protected:
     LinkedListNode<T>* _head;
     LinkedListNode<T>* _tail;
     size_t _size;

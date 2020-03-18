@@ -219,7 +219,7 @@ void LinkedList<T, Allocator>::remove(const T& value)
     {
         if(*it == value)
         {
-            remove(it);            
+            remove(it);          
         }
     }
 }
@@ -239,9 +239,8 @@ void LinkedList<T, Allocator>::remove(const_iterator first, const_iterator last)
     first.ptr->previous->next = last.ptr->next;
     last.ptr->next->previous = first.ptr->previous;
     for(auto it = first; it != last + 1; )
-    {
-        it++;
-        _allocator.deallocate(it.ptr->previous, 1);
+    {        
+        _allocator.deallocate((it++).ptr, 1);
         _size--;
     }    
 }

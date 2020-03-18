@@ -20,7 +20,7 @@ TEST_F(ArrayTest, shrinkTest)
 
     shrinkToFit();
 
-    EXPECT_EQ(size(), capacity());    
+    EXPECT_EQ(_size, capacity());    
     EXPECT_EQ(first, _data[0]);
     EXPECT_EQ(last, _data[_size - 1]);
 }
@@ -49,43 +49,43 @@ TEST_F(ArrayTest, backThrowIfEmptyTest)
 
 TEST_F(ArrayTest, pushBackTest)
 {
-    int pr_size = size();
+    int pr_size = _size;
     
     push_back(4);
     
     EXPECT_EQ(4, _data[_size - 1]);
-    EXPECT_EQ(++pr_size, size());
+    EXPECT_EQ(++pr_size, _size);
 }
 
 TEST_F(ArrayTest, pushFrontTest)
 {
-    int pr_size = size();
+    int pr_size = _size;
 
     push_front(-1);
 
     EXPECT_EQ(-1, _data[0]);
-    EXPECT_EQ(++pr_size, size());
+    EXPECT_EQ(++pr_size, _size);
 }
 
 TEST_F(ArrayTest, popBackTest)
 {
-    int pr_size = size();
+    int pr_size = _size;
     int prelast = _data[_size - 2];
 
     pop_back();
 
-    EXPECT_EQ(--pr_size, size());
+    EXPECT_EQ(--pr_size, _size);
     EXPECT_EQ(prelast, _data[_size - 1]);
 }
 
 TEST_F(ArrayTest, popFrontTest)
 {
-    int pr_size = size();
+    int pr_size = _size;
     int pastFirst = _data[1];
 
     pop_front();
 
-    EXPECT_EQ(--pr_size, size());
+    EXPECT_EQ(--pr_size, _size);
     EXPECT_EQ(pastFirst, _data[0]);
 }
 
