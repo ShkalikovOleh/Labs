@@ -10,9 +10,6 @@ class array_iterator;
 template<typename T, typename Allocator = std::allocator<T> >
 class Array
 {
-    using iterator = array_iterator<T>;
-    using const_iterator = array_iterator<const T>;
-
 protected:
     size_t _capacity;
     size_t _size;
@@ -24,6 +21,18 @@ protected:
     void decrease();
 
 public:
+    using iterator = array_iterator<T>;
+    using const_iterator = array_iterator<const T>;
+    
+    using value_type = T;
+    using allocator_type = Allocator;
+    using size_type = size_t;
+    using difference_type = std::ptrdiff_t;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using pointer = T*;
+    using const_pointer = const T*;
+
     Array(size_t capacity = 10);    
     Array(std::initializer_list<T>);
     Array(const Array<T, Allocator>&);
@@ -41,7 +50,9 @@ public:
     const_iterator cend() const noexcept;
 
     const T& front() const;
+    T& front();    
     const T& back() const;
+    T& back();
 
     void push_back(const T&);
     void push_back(T&&);

@@ -61,13 +61,14 @@ void Array<T, Allocator>::shrinkToFit() noexcept
 template<typename T, typename Allocator>
 void Array<T, Allocator>::resize(size_t newSize)
 {
-    if(_size > newSize)
+    if(newSize < _size)
         throw std::exception();
 
     _capacity = newSize;
 
     T* newData = _allocator.allocate(newSize);
     std::copy(_data, _data+_size, newData);
+    _allocator.deallocate(_data, _size);
     _data = newData;
 }
 
@@ -116,7 +117,23 @@ const T& Array<T, Allocator>::front() const
 }
 
 template<typename T, typename Allocator>
+T& Array<T, Allocator>::front()
+{
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _data[0];
+}
+
+template<typename T, typename Allocator>
 const T& Array<T, Allocator>::back() const
+{
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _data[_size - 1];
+}
+
+template<typename T, typename Allocator>
+T& Array<T, Allocator>::back()
 {
     if(_size == 0)
         throw std::length_error("Array is empty");
