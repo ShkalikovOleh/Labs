@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "/home/shov/Repositories/PyEnvs/DataScience/bin/python",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests",
+        "-p",
+        "*Test.py"
+    ],
+    "python.linting.enabled": true,
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false
+}
