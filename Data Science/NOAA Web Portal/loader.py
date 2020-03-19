@@ -43,14 +43,12 @@ def preprocess_raw_data(line : str):
     line = line.replace(' ', ',',2)    
     return (line + '\n')
 
-
 def clear_dir(directory : str, index : int):    
     for file in glob(os.path.join(directory, "province-{}*.csv".format(index))):
         os.remove(file) #delete all previous data
 
- 
 def download_data(directory : str, index : int, minYear : int, maxYear : int): 
-    if maxYear > datetime.now().year:
+    if minYear < 1991 or maxYear > datetime.now().year:
         raise ValueError("Year range is incorrect")
     
     if index > 27 or index < 1:
@@ -73,12 +71,10 @@ def download_data(directory : str, index : int, minYear : int, maxYear : int):
         for line in response.iter_lines(chunk_size=512, decode_unicode=True):                                            
             file.write(preprocess_raw_data(line)) #write line by line
 
-
 def download_all_data(directory : str, minYear : int, maxYear : int):
     for i in range(1,28):
         clear_dir(directory, i)
         download_data(directory, i, minYear, maxYear) 
-
 
 def load_data_to_pd(directory : str, index : int):
     if not os.path.exists(directory):
@@ -97,7 +93,6 @@ def load_data_to_pd(directory : str, index : int):
     df.drop(['Year', 'Week'], axis=1, inplace=True)
 
     return df
-
 
 def load_all_data_to_pd(directory : str):
     df = pd.DataFrame(columns=['SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'Province', 'Period'])
