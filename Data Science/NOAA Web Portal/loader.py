@@ -1,5 +1,5 @@
 import os
-import glob
+from glob import glob
 from datetime import datetime
 
 import requests
@@ -45,12 +45,12 @@ def preprocess_raw_data(line : str):
 
 
 def clear_dir(directory : str, index : int):    
-    for file in glob.glob(os.path.join(directory, "province-{}*.csv".format(index))):
+    for file in glob(os.path.join(directory, "province-{}*.csv".format(index))):
         os.remove(file) #delete all previous data
 
  
 def download_data(directory : str, index : int, minYear : int, maxYear : int): 
-    if maxYear > datetime.now().year():
+    if maxYear > datetime.now().year:
         raise ValueError("Year range is incorrect")
     
     if index > 27 or index < 1:
@@ -85,10 +85,11 @@ def load_data_to_pd(directory : str, index : int):
         raise ValueError("Direcory does not exist")
     
     search_path = os.path.join(directory, f"province-{index}.*.csv")
-    data_path = glob.glob(search_path)[0]
+    data_path = glob(search_path)[0]
     
     df = pd.read_csv(data_path, header=0, names=['Year','Week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI'])    
-    df['Province'] = index    
+    df['Province'] = index 
+    df['Province'] = df['Province'].astype('int32')
     
     #generate datetime field
     dt = df['Year'].astype('str') + "-" + df['Week'].astype('str') + "-1"
@@ -99,8 +100,8 @@ def load_data_to_pd(directory : str, index : int):
 
 
 def load_all_data_to_pd(directory : str):
-    df = pd.DataFrame()
+    df = pd.DataFrame(columns=['SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'Province', 'Period'])
     for i in range(1,28):
-        df.append(load_data_to_pd(directory, i), ignore_index=True)
+        df = df.append(load_data_to_pd(directory, i), ignore_index=True)
     
     return df   
