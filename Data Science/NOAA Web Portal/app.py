@@ -1,4 +1,5 @@
 import os
+import sys
 from glob import glob
 from datetime import datetime
 
@@ -11,6 +12,7 @@ import noaa
 
 class NOAAWebPortal(server.App):
     title = "NOAA Web Portal"
+
     inputs = [
         {
             "type": 'dropdown',
@@ -71,16 +73,14 @@ class NOAAWebPortal(server.App):
             "value": '19.03.2020',
             "key": 'time_range_max',
             "action_id": "update_data"
-        }
-    ]
+        }]
 
     controls = [
         {
             "type": "button",
             "id": "update_data",
             "label": "Show data"
-        }
-    ]
+        }]
 
     tabs = ["Plot", "Table"]
 
@@ -97,36 +97,51 @@ class NOAAWebPortal(server.App):
             "id": "table_id",
             "control_id": "update_data",
             "tab": "Table"
-        }
-    ]    
+        }]    
 
-    def __init__(self, data_dir : str):
-        search_path = os.path.join(data_dir, f"province-*.csv")
-        if(len(glob(search_path)) != 27):
-            loader.download_all_data(data_dir, 1991, 2020)
-        df = loader.load_all_data_to_pd(data_dir)
+    def __init__(self, df):
         self.selector = noaa.NOAASelector(df)
 
     def paramatrize_selector(self, params):
         self.selector.reset()
         province = int(params['province_index'])
-        fromDate = datetime.strptime(params['time_range_min'], '%d.%m.%Y')
-        toDate = datetime.strptime(params['time_range_max'], '%d.%m.%Y')
-        self.selector.by_province(province).by_timerange(fromDate, toDate)
+        
+        try:
+            fromDate = datetime.strptime(params['time_range_min'], '%d.%m.%Y')
+        except:
+            fromDate = datetime(1991,8,24)
 
+        try:
+            toDate = datetime.strptime(params['time_range_max'], '%d.%m.%Y')
+        except:            
+            toDate = datetime.now()
+
+        self.selector.by_province(province).by_timerange(fromDate, toDate)
 
     def getPlot(self, params):
         self.paramatrize_selector(params)
         data = self.selector.select(column=params['series_type'])
         return sns.lineplot(x='Period', y=params['series_type'], data=data).get_figure()
 
-
     def getData(self, params):                        
         self.paramatrize_selector(params)
         return self.selector.select(column=params['series_type'])
 
 
-
 if __name__ == "__main__":
-    portal = NOAAWebPortal("data")
-    portal.launch(port=5000)        
+    if len(sys.argv) > 1:
+        data_dir = sys.argv[1]
+    else:
+        data_dir = "data"
+
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+
+    search_path = os.path.join(data_dir, f"province-*.csv")
+    if(len(glob(search_path)) != 27):
+        loader.download_all_data(data_dir, 1991, datetime.now().year)
+    
+    df = loader.load_all_data_to_pd(data_dir)    
+    
+    portal = NOAAWebPortal(df)
+    portal.launch()
