@@ -14,7 +14,7 @@ class NOAASelector():
 
     #specify timerange
     def by_timerange(self, min : datetime, max : datetime):
-        if min.year < 1991 or max.year > datetime.now().year:
+        if min > max:
             raise ValueError('Time range is incorrect')
 
         self.condition = self.condition & (self.df['Period'] >= min) & (self.df['Period'] <= max)
