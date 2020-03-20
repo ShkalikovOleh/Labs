@@ -48,7 +48,7 @@ def clear_dir(directory : str, index : int):
         os.remove(file) #delete all previous data
 
 def download_data(directory : str, index : int, minYear : int, maxYear : int, is_dir_create_if_not_exists : bool = False): 
-    if minYear < 1991 or maxYear > datetime.now().year:
+    if minYear > maxYear:
         raise ValueError("Year range is incorrect")
     
     if index > 27 or index < 1:
@@ -80,7 +80,7 @@ def download_if_not_exist(directory : str, minYear : int, maxYear : int):
     list_for_download = []
     for i in range(1,28):
         search_path = os.path.join(directory, f"province-{i}.*.csv")
-        if len(glob(search_path)) == 0:
+        if len(glob(search_path)) == 0: #check 'is file with i province exists?'
             list_for_download.append(i)
     
     for i in list_for_download:
