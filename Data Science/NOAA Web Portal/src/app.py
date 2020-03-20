@@ -63,7 +63,7 @@ class NOAAWebPortal(server.App):
         {
             "type": 'text',            
             "label": 'From',
-            "value": '24.08.2001',
+            "value": '24.08.1991',
             "key": 'time_range_min',
             "action_id": "update_data"
         },
@@ -119,8 +119,7 @@ class NOAAWebPortal(server.App):
         self.selector.by_province(province).by_timerange(fromDate, toDate)
 
     def getPlot(self, params):
-        self.paramatrize_selector(params)
-        data = self.selector.select(column=params['series_type'])
+        data = self.getData(params)
         return sns.lineplot(x='Period', y=params['series_type'], data=data).get_figure()
 
     def getData(self, params):                        
@@ -132,15 +131,9 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         data_dir = sys.argv[1]
     else:
-        data_dir = "data"
-
-    if not os.path.exists(data_dir):
-        os.makedirs(data_dir)
-
-    search_path = os.path.join(data_dir, f"province-*.csv")
-    if(len(glob(search_path)) != 27):
-        loader.download_all_data(data_dir, 1991, datetime.now().year)
+        raise ValueError("Data directory must be specify as first argument")
     
+    loader.download_if_not_exist(data_dir, 1991, datetime.now().year)    
     df = loader.load_all_data_to_pd(data_dir)    
     
     portal = NOAAWebPortal(df)

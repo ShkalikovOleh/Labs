@@ -39,7 +39,7 @@ NOAAIndex = {
 
 def preprocess_raw_data(line : str):
     if '/' in line:  
-        return ''    
+        return None    
     line = line.replace(' ', ',',2)    
     return (line + '\n')
 
@@ -47,7 +47,7 @@ def clear_dir(directory : str, index : int):
     for file in glob(os.path.join(directory, "province-{}*.csv".format(index))):
         os.remove(file) #delete all previous data
 
-def download_data(directory : str, index : int, minYear : int, maxYear : int): 
+def download_data(directory : str, index : int, minYear : int, maxYear : int, is_dir_create_if_not_exists : bool = False): 
     if minYear < 1991 or maxYear > datetime.now().year:
         raise ValueError("Year range is incorrect")
     
@@ -55,7 +55,10 @@ def download_data(directory : str, index : int, minYear : int, maxYear : int):
         raise ValueError("Index is incorrect")
     
     if not os.path.exists(directory):
-        raise ValueError("Direcory does not exist")
+        if not is_dir_create_if_not_exists:
+            raise ValueError("Direcory does not exist")
+        else:
+            os.makedirs(directory)
 
     #download raw data
     with requests.Session() as sess:
@@ -68,8 +71,20 @@ def download_data(directory : str, index : int, minYear : int, maxYear : int):
     #preprocess and save to file line by line
     with open(path, 'w') as file:
         file.write("Year,Week,SMN,SMT,VCI,TCI,VHI\n")        
-        for line in response.iter_lines(chunk_size=512, decode_unicode=True):                                            
-            file.write(preprocess_raw_data(line)) #write line by line
+        for line in response.iter_lines(chunk_size=512, decode_unicode=True):
+            temp = preprocess_raw_data(line)
+            if temp:                                            
+                file.write(temp) #write line by line
+
+def download_if_not_exist(directory : str, minYear : int, maxYear : int):
+    list_for_download = []
+    for i in range(1,28):
+        search_path = os.path.join(directory, f"province-{i}.*.csv")
+        if len(glob(search_path)) == 0:
+            list_for_download.append(i)
+    
+    for i in list_for_download:
+        download_data(directory, i, minYear, maxYear)
 
 def download_all_data(directory : str, minYear : int, maxYear : int):
     for i in range(1,28):
