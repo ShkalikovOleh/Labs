@@ -8,9 +8,10 @@ private:
     Container _container;
 
 public:
+    Queue();
     Queue(std::initializer_list<T>);
     Queue(const Container& container);
-    Queue(const Queue& container);
+    Queue(const Queue& container);    
 
     bool empty() const noexcept;
     std::size_t size() const noexcept;

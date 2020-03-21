@@ -1,6 +1,9 @@
 #include "Queue.h"
 
 template<typename T, typename Container>
+Queue<T, Container>::Queue(){   }
+
+template<typename T, typename Container>
 Queue<T, Container>::Queue(std::initializer_list<T> values)
 {
     for (auto &&value : values)
@@ -37,6 +40,12 @@ template<typename T, typename Container>
 T& Queue<T, Container>::front()
 {
     _container.front();
+}
+
+template<typename T, typename Container>
+T& Queue<T, Container>::back()
+{
+    _container.back();
 }
 
 template<typename T, typename Container>
