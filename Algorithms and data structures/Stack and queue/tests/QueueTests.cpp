@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "../src/Queue.h"
+#include "../src/CircularQueue.h"
 #include "../../List and array/src/Array.h"
 #include "../../List and array/src/LinkedList.h"
 
@@ -15,6 +16,7 @@ protected:
     Queue<int, std::deque<int>> dq;
     Queue<int, Array<int>> aq;
     Queue<int, LinkedList<int>> llq;
+    CircularQueue<int, 5> cq;
 
     void SetUp()
     {        
@@ -23,6 +25,7 @@ protected:
             aq.push(i);
             dq.push(i);
             llq.push(i);
+            cq.push(i);
         }        
     }
 };
@@ -32,6 +35,7 @@ TEST_F(QueueTests, back)
     EXPECT_EQ(7, dq.back());
     EXPECT_EQ(7, aq.back());
     EXPECT_EQ(7, llq.back());
+    EXPECT_EQ(7, cq.back());
 }
 
 TEST_F(QueueTests, front)
@@ -39,11 +43,11 @@ TEST_F(QueueTests, front)
     EXPECT_EQ(4, dq.front());
     EXPECT_EQ(4, aq.front());
     EXPECT_EQ(4, llq.front());
+    EXPECT_EQ(4, cq.front());
 }
 
 TEST_F(QueueTests, pop)
-{
-    std::cout << "DEQ" << std::endl;
+{    
     dq.pop();
     EXPECT_EQ(3, dq.size());
     EXPECT_EQ(5, dq.front());
@@ -51,27 +55,36 @@ TEST_F(QueueTests, pop)
     aq.pop();
     EXPECT_EQ(3, aq.size());
     EXPECT_EQ(5, aq.front());
-
-    std::cout << "LL" << std::endl;
+ 
     llq.pop();
     EXPECT_EQ(3, llq.size());
     EXPECT_EQ(5, llq.front());
+
+    cq.pop();
+    EXPECT_EQ(3, cq.size());
+    EXPECT_EQ(5, cq.front());
 }
 
 TEST_F(QueueTests, push)
 {
-    Queue<int, std::deque<int>> dq;
-    dq.push(11);
-    EXPECT_EQ(1, dq.size());
-    EXPECT_EQ(11, dq.back());
+    Queue<int, std::deque<int>> ndq;
+    ndq.push(11);
+    EXPECT_EQ(1, ndq.size());
+    EXPECT_EQ(11, ndq.back());
 
-    Queue<int, Array<int>> aq;
-    aq.push(11);
-    EXPECT_EQ(1, aq.size());
-    EXPECT_EQ(11, aq.back());
+    Queue<int, Array<int>> naq;
+    naq.push(11);
+    EXPECT_EQ(1, naq.size());
+    EXPECT_EQ(11, naq.back());
 
-    Queue<int, LinkedList<int>> llq;
-    llq.push(11);
-    EXPECT_EQ(1, llq.size());
-    EXPECT_EQ(11, llq.back());
+    Queue<int, LinkedList<int>> nllq;
+    nllq.push(11);
+    EXPECT_EQ(1, nllq.size());
+    EXPECT_EQ(11, nllq.back());
+
+    cq.pop();
+    cq.push(11);
+    cq.push(12);
+    EXPECT_EQ(5, cq.size());
+    EXPECT_EQ(12, cq.back());
 }
