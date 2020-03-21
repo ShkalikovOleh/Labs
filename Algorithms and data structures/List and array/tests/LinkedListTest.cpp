@@ -13,6 +13,19 @@ protected:
     }
 };
 
+TEST_F(LinkedListTest, copyCtorTest)
+{
+    LinkedList<int> list = { 4, 5, 6};
+    auto copy = list;
+    
+    EXPECT_EQ(list.size(), copy.size());
+        
+    for(auto it = list.cbegin(), jt = copy.cbegin(); it != list.cend(); it++, jt++)
+    {
+        EXPECT_EQ(*it, *jt);
+    }
+}
+
 TEST_F(LinkedListTest, frontTest)
 {
     ASSERT_EQ(_head->next->data, front());
