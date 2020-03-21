@@ -8,6 +8,7 @@ private:
     Container _container;
 
 public:
+    Stack();
     Stack(std::initializer_list<T>);
     Stack(const Container& container);
     Stack(const Stack& container);

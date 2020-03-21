@@ -1,6 +1,9 @@
 #include "Stack.h"
 
 template<typename T, typename Container>
+Stack<T, Container>::Stack(){   }
+
+template<typename T, typename Container>
 Stack<T, Container>::Stack(std::initializer_list<T> values)
 {
     for (auto &&value : values)
