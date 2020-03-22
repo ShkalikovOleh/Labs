@@ -43,6 +43,12 @@ T& Stack<T, Container>::top()
 }
 
 template<typename T, typename Container>
+const T& Stack<T, Container>::top() const
+{
+    _container.back();
+}
+
+template<typename T, typename Container>
 void Stack<T, Container>::push(T&& value)
 {
     _container.push_back(value);
