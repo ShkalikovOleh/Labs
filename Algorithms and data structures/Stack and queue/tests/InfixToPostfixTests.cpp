@@ -6,7 +6,7 @@
 TEST(InfixToPostfixTests, correct)
 {
     std::string firstInfix = "(A-B-C)/D-E*F";
-    std::string secondInfix = "(A+B)*C-(D+E)/F";
+    std::string secondInfix = "[A+B]*C-(D+E)/F";
     std::string thirdInfix = "A/(B-C)+D*(E-F)";
     std::string fourthInfix = "(A*B+C)/D-F/E";
 

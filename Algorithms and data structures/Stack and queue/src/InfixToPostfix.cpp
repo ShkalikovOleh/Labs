@@ -16,7 +16,7 @@ CharType getSymbolType(char symbol)
 {
     if(symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/')
         return CharType::Operator;
-    else if(symbol >= 'A' && symbol <= 'z') //variables
+    else if((symbol >= 'A' && symbol <= 'Z') || (symbol >= 'a' && symbol <= 'z')) //variables
         return CharType::Operand;
     else if(symbol >= '0' && symbol <= '9') //numbers
         return CharType::Operand;
