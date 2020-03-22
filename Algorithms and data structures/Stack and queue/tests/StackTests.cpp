@@ -35,7 +35,6 @@ TEST_F(StackTests, back)
 
 TEST_F(StackTests, pop)
 {
-    std::cout << "DEQ" << std::endl;
     dq.pop();
     EXPECT_EQ(3, dq.size());
     EXPECT_EQ(6, dq.top());
@@ -43,8 +42,7 @@ TEST_F(StackTests, pop)
     aq.pop();
     EXPECT_EQ(3, aq.size());
     EXPECT_EQ(6, aq.top());
-
-    std::cout << "LL" << std::endl;
+    
     llq.pop();
     EXPECT_EQ(3, llq.size());
     EXPECT_EQ(6, llq.top());
