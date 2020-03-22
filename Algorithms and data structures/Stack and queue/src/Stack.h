@@ -1,8 +1,10 @@
 #ifndef STACK_H
-#define STACK_H
+    #define STACK_H
+
+#include "IStack.h"
 
 template <typename T, typename Container>
-class Stack
+class Stack : public IStack<T>
 {
 private:
     Container _container;
@@ -13,15 +15,15 @@ public:
     Stack(const Container& container);
     Stack(const Stack& container);
 
-    bool empty() const noexcept;
-    std::size_t size() const noexcept;
+    bool empty() const noexcept override;
+    std::size_t size() const noexcept override;
 
-    T& top();
-    const T& top() const;    
+    T& top() override;
+    const T& top() const;
 
-    void push(T&&);
-    void push(const T&);
-    void pop();  
+    void push(T&&) override;
+    void push(const T&) override;
+    void pop() override;
 };
 
 #include "Stack.cpp"
