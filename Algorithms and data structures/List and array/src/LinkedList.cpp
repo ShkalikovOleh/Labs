@@ -93,7 +93,23 @@ const T& LinkedList<T, Allocator>::back() const
 }
 
 template<typename T, typename Allocator>
+T& LinkedList<T, Allocator>::back()
+{
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _tail->previous->data;
+}
+
+template<typename T, typename Allocator>
 const T& LinkedList<T, Allocator>::front() const
+{
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _head->next->data;
+}
+
+template<typename T, typename Allocator>
+T& LinkedList<T, Allocator>::front()
 {
     if(_size == 0)
         throw std::length_error("Array is empty");

@@ -22,9 +22,6 @@ class list_iterator;
 template <typename T, typename Allocator = std::allocator<LinkedListNode<T>> >
 class LinkedList
 {
-    using iterator = list_iterator<T>;
-    using const_iterator = list_iterator<const T>;
-
 protected:
     LinkedListNode<T>* _head;
     LinkedListNode<T>* _tail;
@@ -32,6 +29,18 @@ protected:
     Allocator _allocator;
 
 public:
+    using iterator = list_iterator<T>;
+    using const_iterator = list_iterator<const T>;
+
+    using value_type = T;
+    using allocator_type = Allocator;
+    using size_type = size_t;
+    using difference_type = std::ptrdiff_t;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using pointer = T*;
+    using const_pointer = const T*;
+
     LinkedList();
     LinkedList(std::initializer_list<T>);
     LinkedList(const LinkedList<T, Allocator>&);
@@ -43,7 +52,9 @@ public:
     const_iterator cend() const noexcept;
 
     const T& back() const;
+    T& back();
     const T& front() const;
+    T& front();
 
     size_t size() const noexcept;
     bool empty() const noexcept;

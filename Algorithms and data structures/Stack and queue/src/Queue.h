@@ -10,6 +10,12 @@ private:
     Container _container;
 
 public:
+    using container_type = Container;
+    using value_type = typename Container::value_type;
+    using size_type = typename Container::size_type;
+    using reference	= typename Container::reference;
+    using const_reference = typename Container::const_reference;
+
     Queue();
     Queue(std::initializer_list<T>);
     Queue(const Container& container);

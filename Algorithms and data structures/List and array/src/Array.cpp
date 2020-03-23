@@ -116,7 +116,23 @@ const T& Array<T, Allocator>::front() const
 }
 
 template<typename T, typename Allocator>
+T& Array<T, Allocator>::front()
+{
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _data[0];
+}
+
+template<typename T, typename Allocator>
 const T& Array<T, Allocator>::back() const
+{
+    if(_size == 0)
+        throw std::length_error("Array is empty");
+    return _data[_size - 1];
+}
+
+template<typename T, typename Allocator>
+T& Array<T, Allocator>::back()
 {
     if(_size == 0)
         throw std::length_error("Array is empty");
