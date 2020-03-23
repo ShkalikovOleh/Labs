@@ -160,11 +160,24 @@ std::ostream& Task4(std::ostream& stream, const Text& text)
                         stream << *it;
                     }
                     stream << std::endl;
-                }
-                
+                }   
             }
         }
     }
     
     return stream;
+}
+
+int countChar(const Text& text, char symbol)
+{
+    int counter = 0;
+    for (auto &&word : text)
+    {
+        for (auto &&letter : word)
+        {
+            if(letter == symbol)
+                counter++;       
+        }        
+    }
+    return counter;
 }

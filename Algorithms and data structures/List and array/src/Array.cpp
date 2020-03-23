@@ -61,13 +61,14 @@ void Array<T, Allocator>::shrinkToFit() noexcept
 template<typename T, typename Allocator>
 void Array<T, Allocator>::resize(size_t newSize)
 {
-    if(_size > newSize)
+    if(newSize < _size)
         throw std::exception();
 
     _capacity = newSize;
 
     T* newData = _allocator.allocate(newSize);
     std::copy(_data, _data+_size, newData);
+    _allocator.deallocate(_data, _size);
     _data = newData;
 }
 
