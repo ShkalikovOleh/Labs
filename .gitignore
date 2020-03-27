@@ -260,11 +260,10 @@ paket-files/
 __pycache__/
 *.pyc
 /Lab5/test.in
-Data \Science/**/*.csv
-*.ipynb*/
+Data \Science/**/data/*
 /Lab5/test.out
 /Lab5/binary.txt
 **/build
 **/WebLabs/db
-
 .ipynb*
+Data Science/Exploration analysis/.vscode
