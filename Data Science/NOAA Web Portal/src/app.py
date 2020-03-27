@@ -3,6 +3,7 @@ import sys
 from glob import glob
 from datetime import datetime
 
+import pandas as pd
 import seaborn as sns
 from spyre import server
 
@@ -82,21 +83,33 @@ class NOAAWebPortal(server.App):
             "label": "Show data"
         }]
 
-    tabs = ["Plot", "Table"]
+    tabs = ["Plot", "Table", "MinMaxTable", "MinMaxPlot"]
 
     outputs = [
         {
             "type": "plot",
-            "id": "plot",
+            "id": "get_all_plot",
             "control_id": "update_data",
             "tab": "Plot",
             "on_page_load": True
         },
         {
             "type": "table",
-            "id": "table_id",
+            "id": "get_all_data",
             "control_id": "update_data",
             "tab": "Table"
+        },
+        {
+            "type": "table",
+            "id": "get_min_max_data",
+            "control_id": "update_data",
+            "tab": "MinMaxTable"
+        },
+        {
+            "type": "plot",
+            "id": "get_min_max_plot",
+            "control_id": "update_data",
+            "tab": "MinMaxPlot"            
         }]    
 
     def __init__(self, df):
@@ -122,13 +135,25 @@ class NOAAWebPortal(server.App):
 
         self.selector.by_province(province).by_timerange(fromDate, toDate)
 
-    def getPlot(self, params):
-        data = self.getData(params)
+    def get_all_plot(self, params):
+        data = self.get_all_data(params)
         return sns.lineplot(x='Period', y=params['series_type'], data=data).get_figure()
 
-    def getData(self, params):                        
+    def get_all_data(self, params):                        
         self.paramatrize_selector(params)
         return self.selector.select(column=params['series_type'])
+
+    def get_min_max_data(self, params):
+        self.paramatrize_selector(params)
+        temp = self.selector.select(column=params['series_type']).set_index('Period')
+        temp = temp.resample('Y')
+        result = pd.DataFrame({"Year": temp.min().index.year, "Min":temp.min()[params['series_type']], "Max":temp.max()[params['series_type']]})
+        return result
+
+    def get_min_max_plot(self, params):
+        data = self.get_min_max_data(params).set_index('Year')
+        return data.plot().get_figure()
+        
 
 
 if __name__ == "__main__":
