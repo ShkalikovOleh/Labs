@@ -28,3 +28,13 @@ TEST(infixToPostfix, throwIfIncorrectBrackets)
     EXPECT_ANY_THROW(infixToPostfix(incorrect1));
     EXPECT_ANY_THROW(infixToPostfix(incorrect2));
 }
+
+TEST(infixToPostfix, calculate)
+{
+    std::string infix = "(A+B)/B-A";        
+    std::map<char, int> map;
+    map.insert(std::pair('A', 12));
+    map.insert(std::pair('B', 6));
+
+    ASSERT_EQ(-9, calculate_infix(infix, map));
+}

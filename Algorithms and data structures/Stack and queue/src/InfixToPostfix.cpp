@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <functional>
 
 #include "InfixToPostfix.h"
 #include "Stack.h"
@@ -59,7 +60,7 @@ std::string infixToPostfix(const std::string& infix)
         throw std::exception(); //incorrect bracket structure
 
     std::string result = "";
-    Stack<char, Container> stash;    
+    Stack<char, Container> stash;
 
     for (auto &&symbol : infix)
     {
@@ -109,4 +110,43 @@ std::string infixToPostfix(const std::string& infix)
     }
     
     return result;
+}
+
+template<typename Container = std::vector<int>>
+int calculate_infix(const std::string& infix, std::map<char, int> values)
+{
+    std::string postfix = infixToPostfix(infix);
+    
+    Stack<int, Container> stash;
+
+    for(auto&& symbol : postfix)
+    {
+        auto type = getSymbolType(symbol);
+        switch(type)
+        {
+            case CharType::Operand:
+                stash.push(values[symbol]);
+                break;
+            case CharType::Operator:
+            {                                
+                auto second = stash.top();
+                stash.pop();
+                auto first = stash.top();
+                stash.pop();
+                                
+                if(symbol == '+')
+                    stash.push(first + second);
+                else if(symbol == '-')
+                    stash.push(first - second);
+                else if(symbol == '/')
+                    stash.push(first / second);
+                else if(symbol == '*')
+                   stash.push(first * second);                
+            }
+            default:
+                break;    
+        }
+    }
+
+    return stash.top();
 }
