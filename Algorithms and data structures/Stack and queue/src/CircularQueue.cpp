@@ -29,6 +29,19 @@ CircularQueue<T, capacity, Allocator>::CircularQueue(std::array<T, capacity> dat
 }
 
 template<typename T, int capacity, typename Allocator>
+CircularQueue<T, capacity, Allocator>::CircularQueue(const CircularQueue& other)
+{
+    _data = _allocator.allocate(capacity);
+    for(int i = 0; i < other._size; i++)
+    {
+        _data[i] = other._data[(other._head + i) % capacity];
+    }
+    _head = 0;
+    _tail = other._size - 1;
+    _size = other._size;
+}
+
+template<typename T, int capacity, typename Allocator>
 CircularQueue<T, capacity, Allocator>::CircularQueue(std::initializer_list<T> values) : _size(0), _head(0), _tail(-1)
 {
     _data = _allocator.allocate(capacity);
@@ -38,6 +51,12 @@ CircularQueue<T, capacity, Allocator>::CircularQueue(std::initializer_list<T> va
     {
         push(value);
     }
+}
+
+template<typename T, int capacity, typename Allocator>
+CircularQueue<T, capacity, Allocator>::~CircularQueue()
+{
+    _allocator.deallocate(_data, capacity);
 }
 
 template<typename T, int capacity, typename Allocator>

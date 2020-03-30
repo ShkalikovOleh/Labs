@@ -88,3 +88,24 @@ TEST_F(QueueTests, push)
     EXPECT_EQ(5, cq.size());
     EXPECT_EQ(12, cq.back());
 }
+
+TEST(CircularQueue, copyCtor)
+{
+    CircularQueue<int,4> q = { 4, 5, 6 };
+    q.pop();
+    q.pop();
+
+    q.push(11);
+    q.push(12);
+    q.push(13);
+    
+    CircularQueue<int, 4> copy = q;
+
+    EXPECT_EQ(q.size(), copy.size());
+    while(!copy.empty())
+    {
+        EXPECT_EQ(q.front(), copy.front());
+        q.pop();
+        copy.pop();
+    }
+}

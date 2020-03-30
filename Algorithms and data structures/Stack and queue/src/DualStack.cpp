@@ -21,6 +21,12 @@ DualStack<T, capacity, Allocator>::DualStack(const DualStack& other) : state(Sta
 }
 
 template<typename T, uint capacity, typename Allocator>
+DualStack<T, capacity, Allocator>::~DualStack()
+{
+    _allocator.deallocate(_data, capacity);
+}
+
+template<typename T, uint capacity, typename Allocator>
 void DualStack<T, capacity, Allocator>::checkState()
 {
     if(state == State::NotSelected)

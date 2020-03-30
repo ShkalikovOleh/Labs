@@ -27,6 +27,7 @@ private:
 public:
     DualStack();
     DualStack(const DualStack& container);
+    ~DualStack();
 
     DualStack& first() noexcept;
     DualStack& second() noexcept;

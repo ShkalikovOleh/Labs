@@ -20,6 +20,7 @@ public:
     CircularQueue(std::array<T, capacity>);
     CircularQueue(std::initializer_list<T>);
     CircularQueue(const CircularQueue&);
+    ~CircularQueue();
 
     bool empty() const noexcept override;
     std::size_t size() const noexcept override;
