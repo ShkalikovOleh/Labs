@@ -19,5 +19,20 @@ namespace Tree
         public BSTNode<TKey, TValue> Right { get; internal set; }
 
         public BSTNode<TKey, TValue> Left { get; internal set; }
+
+        public int Depth
+        {
+            get
+            {
+                var current = Parent;
+                int depth = 0;
+                while(current != null)
+                {
+                    depth++;
+                    current = current.Parent;
+                }
+                return depth;
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace Tree
 
         TValue Search(TKey key);
 
+        int Height { get; }
+
         BSTNode<TKey, TValue> Min();
 
         BSTNode<TKey, TValue> Max();

@@ -13,7 +13,13 @@ namespace tests
             tree.Add(9, 9);
             tree.Add(10, 10);
             tree.Add(8, 8);
-            tree.Add(1, 1);        
+            tree.Add(1, 1);
+        }
+
+        [Fact]
+        public void Height()
+        {
+            Assert.Equal(2, tree.Height);
         }
 
         [Fact]
@@ -25,7 +31,6 @@ namespace tests
             Assert.Equal(8, tree.Search(8));
             Assert.Equal(1, tree.Search(1));
         }
-
 
         [Fact]
         public void SearchByIncorrectKey()
