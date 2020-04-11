@@ -12,25 +12,9 @@ namespace Tree
         {
             get
             {
-                Queue<BSTNode<TKey, TValue>> visited = new Queue<BSTNode<TKey, TValue>>();                
                 if(Root != null)
-                    visited.Enqueue(Root);
-
-                int height = 0;
-                while (visited.Count != 0)
-                {
-                    height++;
-                    int countInLevel = visited.Count;
-                    for(int i = 0; i < countInLevel; i++)
-                    {
-                        var node = visited.Dequeue();
-                        if(node.Left != null)
-                            visited.Enqueue(node.Left);
-                        if(node.Right != null)
-                            visited.Enqueue(node.Right);
-                    }
-                }
-                return height - 1;
+                    return HeightFromNode(Root);
+                return 0;
             }
         }
 
@@ -84,6 +68,28 @@ namespace Tree
         public BSTNode<TKey, TValue> Max()
         {
             return MaxFromNode(Root);
+        }
+
+        protected int HeightFromNode(BSTNode<TKey, TValue> node)
+        {
+            Queue<BSTNode<TKey, TValue>> visited = new Queue<BSTNode<TKey, TValue>>();
+            visited.Enqueue(node);
+
+            int height = 0;
+            while (visited.Count != 0)
+            {
+                height++;
+                int countInLevel = visited.Count;
+                for (int i = 0; i < countInLevel; i++)
+                {
+                    var temp = visited.Dequeue();
+                    if (temp.Left != null)
+                        visited.Enqueue(temp.Left);
+                    if (temp.Right != null)
+                        visited.Enqueue(temp.Right);
+                }
+            }
+            return height - 1;
         }
 
         protected BSTNode<TKey, TValue> MinFromNode(BSTNode<TKey, TValue> node)
