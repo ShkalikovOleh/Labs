@@ -34,5 +34,10 @@ namespace Tree
                 return depth;
             }
         }
+
+        public override string ToString()
+        {
+            return $"( {Key.ToString()} , {Value.ToString()} )";
+        }
     }
 }

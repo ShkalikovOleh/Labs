@@ -89,7 +89,9 @@ namespace Tree
                         visited.Enqueue(temp.Right);
                 }
             }
-            return height - 1;
+            if(height != 0)
+                return height - 1;
+            return 0;
         }
 
         protected BSTNode<TKey, TValue> MinFromNode(BSTNode<TKey, TValue> node)

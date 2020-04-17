@@ -22,6 +22,14 @@ namespace tests
             Assert.Equal(2, tree.Height);
         }
 
+
+        [Fact]
+        public void HeightEmpty()
+        {
+            var tree = new SimpleBSTree<int, int>();
+            Assert.Equal(0, tree.Height);
+        }
+
         [Fact]
         public void SearchByExistingKey()
         {
