@@ -58,11 +58,17 @@ class NOAASelectorTest(unittest.TestCase):
         toDate = datetime(1991,1,30)
         self.assertRaises(ValueError, self.selector.by_timerange, fromDate, toDate)
 
-    def test_all_checks(self):
+    def test_all_and_checks(self):
         fromDate = datetime(1991,1,1)
         toDate = datetime(1991,1,15)
-        actual = self.selector.by_province(2).by_timerange(fromDate, toDate).select()
+        actual = self.selector.by_province(2).And().by_timerange(fromDate, toDate).select()
         self.assertEqual(len(actual), 2)
+
+    def test_all_or_checks(self):
+        fromDate = datetime(1991,1,1)
+        toDate = datetime(1991,1,15)
+        actual = self.selector.by_province(24).Or().by_timerange(fromDate, toDate).select()
+        self.assertEqual(len(actual), 3)
 
 
 if __name__ == "__main__":

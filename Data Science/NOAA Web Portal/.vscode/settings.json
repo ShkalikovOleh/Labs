@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/shov/PyEnvs/DataScience/bin/python",
+    "python.pythonPath": "/home/shov/Repositories/PyEnvs/DataScience/bin/python",
     "python.testing.unittestArgs": [
         "-v",
         "-s",

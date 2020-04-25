@@ -70,7 +70,7 @@ class NOAAWebPortal(server.App):
         {
             "type": 'text',            
             "label": 'To',
-            "value": '19.03.2020',
+            "value": datetime.now().strftime('%d.%m.%Y'),
             "key": 'time_range_max',
             "action_id": "update_data"
         }]
@@ -114,6 +114,10 @@ class NOAAWebPortal(server.App):
         try:
             toDate = datetime.strptime(params['time_range_max'], '%d.%m.%Y')
         except:            
+            toDate = datetime.now()
+
+        if fromDate > toDate:
+            fromDate = datetime(1991,8,24)
             toDate = datetime.now()
 
         self.selector.by_province(province).by_timerange(fromDate, toDate)
