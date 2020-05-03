@@ -10,8 +10,12 @@ namespace Tree
 
         public InOrderTraversal(IBSTree<TKey, TValue> tree) : base(tree)
         { 
-            if(tree.Root != null)
-                TreeToStash(tree.Root);
+            Reset();
+        }
+
+        public override void Reset()
+        {
+            TreeToStash(tree.Root);
         }
 
         private void TreeToStash(BSTNode<TKey, TValue> from)

@@ -10,10 +10,7 @@ namespace Tree
 
         public PostOrderTraversal(IBSTree<TKey, TValue> tree) : base(tree)
         {
-            if (tree.Root != null)
-            {                
-                TreeToStash(tree.Root);
-            }
+            Reset();
         }
 
         public override void Reset()
