@@ -44,8 +44,10 @@ namespace Tree
 
             if (parent.Key.CompareTo(key) > 0)
                 parent.Left = newNode;
-            else
+            else if(parent.Key.CompareTo(key) < 0)
                 parent.Right = newNode;
+            else
+                throw new ArgumentException("Tree already contains key");
 
             newNode.Parent = parent;
         }

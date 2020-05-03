@@ -30,7 +30,7 @@ namespace Tree
 
         public void Dispose() { }
 
-        public void Reset()
+        public virtual void Reset()
         {
             Current = tree.Root;
         }
