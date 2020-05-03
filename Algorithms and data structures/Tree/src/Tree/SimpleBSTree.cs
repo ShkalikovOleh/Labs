@@ -70,9 +70,20 @@ namespace Tree
                     if (current.Left != null && current.Right != null)
                     {
                         var min = MinFromNode(current.Right);
-                        Remove(min.Key);
+                        
+                        if(min.Parent.Left.Key.CompareTo(min.Key) == 0)
+                            min.Parent.Left = null;
+                        else
+                            min.Parent.Right = null;
+                        
                         min.Left = current.Left;
+                        if(current.Left != null)
+                            current.Left.Parent = min;
+                        
                         min.Right = current.Right;
+                        if(current.Right != null)
+                            current.Right.Parent = min;
+
                         Swap(current, min);
                     }
                     else if (current.Right != null)
@@ -88,6 +99,9 @@ namespace Tree
 
         protected void Swap(BSTNode<TKey, TValue> source, BSTNode<TKey, TValue> destination)
         {
+            if(source.Key.CompareTo(Root.Key) == 0)            
+                Root = destination;                            
+
             if (destination != null)
                 destination.Parent = source.Parent;
 
