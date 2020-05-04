@@ -21,7 +21,7 @@ namespace tests
             var tree = Tasks.GenerateFromString("tasty");
 
             var consolePrintString = tree.GetConsolePrintString();
-            var correct = "-( t , t ) - 2\n  -( a , a ) - 1\n    -( s , s ) - 1\n  -( y , y ) - 1\n";
+            var correct = "-( t , t ) - 2\n  -( a , a ) - 1\n    -\n    -( s , s ) - 1\n  -( y , y ) - 1\n";
             Assert.Equal(correct, consolePrintString);
 
             outputHelper.WriteLine(" ");
