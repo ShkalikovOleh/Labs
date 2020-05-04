@@ -32,8 +32,13 @@ namespace Tree
 
             if (node.Left != null)
                 builder.Append(GetConsolePrintNodeString(node.Left));
+            else if(node.Right != null)
+                builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
+            
             if (node.Right != null)
                 builder.Append(GetConsolePrintNodeString(node.Right));
+            else if(node.Left != null)
+                builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
 
             return builder.ToString();
         }
@@ -48,8 +53,13 @@ namespace Tree
 
             if (node.Left != null)
                 builder.Append(GetConsolePrintNodeString(node.Left, tree));
+            else if(node.Right != null)
+                builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
+
             if (node.Right != null)
                 builder.Append(GetConsolePrintNodeString(node.Right, tree));
+            else if(node.Left != null)
+                builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
 
             return builder.ToString();
         }
