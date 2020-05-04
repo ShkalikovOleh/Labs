@@ -32,12 +32,12 @@ namespace Tree
 
             if (node.Left != null)
                 builder.Append(GetConsolePrintNodeString(node.Left));
-            else if(node.Right != null)
+            else if (node.Right != null)
                 builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
-            
+
             if (node.Right != null)
                 builder.Append(GetConsolePrintNodeString(node.Right));
-            else if(node.Left != null)
+            else if (node.Left != null)
                 builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
 
             return builder.ToString();
@@ -53,12 +53,12 @@ namespace Tree
 
             if (node.Left != null)
                 builder.Append(GetConsolePrintNodeString(node.Left, tree));
-            else if(node.Right != null)
+            else if (node.Right != null)
                 builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
 
             if (node.Right != null)
                 builder.Append(GetConsolePrintNodeString(node.Right, tree));
-            else if(node.Left != null)
+            else if (node.Left != null)
                 builder.AppendLine(new string(' ', 2 * node.Depth + 2) + '-');
 
             return builder.ToString();
@@ -94,17 +94,17 @@ namespace Tree
             tree.Add(2, '8');
             tree.Add(5, '+');
             tree.Add(4, '7');
-            tree.Add(14, '+');
-            tree.Add(6, '*');
-            tree.Add(5, '6');
-            tree.Add('8', '+');
-            tree.Add(7, '5');
-            tree.Add(9, '4');
-            tree.Add(10, '-');
-            tree.Add(12, '-');
-            tree.Add(11, '3');
-            tree.Add(13, '2');
-            tree.Add(15, '1');
+            tree.Add(15, '+');
+            tree.Add(16, '1');
+            tree.Add(11, '-');
+            tree.Add(13, '-');
+            tree.Add(12, '3');
+            tree.Add(14, '2');
+            tree.Add(7, '*');
+            tree.Add(6, '6');
+            tree.Add(9, '+');
+            tree.Add(8, '5');
+            tree.Add(10, '4');
 
             return tree;
         }
@@ -157,7 +157,7 @@ namespace Tree
             }
         }
 
-        public static string GetTraversalConsolePrintString<TKey, TValue>(ITraversal<TKey, TValue> traversal)
+        public static string GetTraversalConsolePrintString<TKey, TValue>(this ITraversal<TKey, TValue> traversal)
                         where TKey : IComparable<TKey>
         {
             if (traversal == null)
