@@ -263,3 +263,5 @@ __pycache__/
 **/Web/db
 .ipynb*
 Data \Science/**/data
+Data Science/Satellite/scripts
+Data Science/Satellite/Dockerfile
